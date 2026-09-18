@@ -8,7 +8,7 @@ I built this because I kept rebuilding it. Every project opened the same way —
 
 Designers think in pixels. Figma speaks pixels, every redline says 24px, every handoff tool measures in pixels. octet-scss keeps that unit end to end, so the number in the design file is the number in the code — no translation layer, no drift between what was drawn and what shipped. The math stays readable too: `gridx(4)` is 32px, not a decoded ratio.
 
-The grid is the other half. One 4px base, doubled to 8 for rhythm, drives spacing and type together — so vertical rhythm lines up across blocks instead of by accident. Consistent spacing, a readable measure, type that scales: the defaults you'd set up anyway, already set up.
+The grid is the other half. One 8px base, (halved to 4 is you want more refinement), drives spacing and type together — so vertical rhythm lines up across blocks instead of by accident. Consistent spacing, a readable measure, type that scales: the defaults you'd set up anyway, already set up.
 
 *One tradeoff, stated plainly: px honors browser zoom — which satisfies WCAG 1.4.4, Resize Text — but not a user's default font-size preference. If honoring that preference matters for your project, override the type tokens in rem.*
 
