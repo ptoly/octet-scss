@@ -1,0 +1,25 @@
+@use "variables" as vars;
+@use "sass:list" as list;
+
+// =============================================================================
+//  Motion — token-based transitions.
+//  ---------------------------------------------------------------------------
+//  Reach for this instead of hand-writing `transition`. It reads from the
+//  duration/easing tokens, and self-disables for reduced-motion users via the
+//  global reset in _a11y.scss.
+//
+//    $properties  a property or space-list (`opacity`, `background-color color`)
+//    $duration    a $duration-* token (default $duration-base)
+//    $easing      an $ease-* token (default $ease-standard)
+// =============================================================================
+@mixin transition(
+  $properties: all,
+  $duration: vars.$duration-base,
+  $easing: vars.$ease-standard
+) {
+  $out: ();
+  @each $prop in $properties {
+    $out: list.append($out, $prop $duration $easing, comma);
+  }
+  transition: $out;
+}

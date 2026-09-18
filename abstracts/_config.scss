@@ -1,0 +1,17 @@
+// =============================================================================
+//  Project configuration · octet-scss
+//  ---------------------------------------------------------------------------
+//  Dimensions and reflow points specific to THIS project's layout — the file
+//  you edit to fit a new design. Compile-time SCSS (media queries can't read
+//  var()), forwarded through abstracts so the whole tree sees it.
+//
+//  Reflow points are chosen from the $breakpoints scale (see _variables.scss)
+//  so structural shifts land on the same lines as the vertical rhythm.
+// =============================================================================
+
+$layout-max-width:     1750px;   // overall content max width
+$layout-sidebar-width:  288px;   // fixed wide-sidebar width
+
+// Structural reflow points (on the $breakpoints scale).
+$layout-rail-collapse: 1280px;   // left rail collapses at/above this width
+$layout-single-col:     720px;   // drops to a single column below this

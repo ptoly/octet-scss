@@ -1,0 +1,13 @@
+@use "../abstracts" as *;
+
+// =============================================================================
+//  Base theme — document-level element styling.
+// =============================================================================
+html { color: var(--text-primary); }
+html, body { background-color: var(--surface-page); }
+
+// Lock page scroll while a full-screen menu/modal is open (toggle on <html>).
+html.is-locked {
+  overflow: hidden;
+  height: 100%;
+}

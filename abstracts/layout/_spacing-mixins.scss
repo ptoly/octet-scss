@@ -1,0 +1,61 @@
+@use "sass:math";
+@use "sass:list" as list;
+@use "../variables" as vars;
+
+// -----------------------------------------------------------------------------
+//  scaled-spacing — core stepped responsive spacing
+//  ---------------------------------------------------------------------------
+//  Emits a value that grows by $step at each of the top $breaks breakpoints,
+//  reaching $max on the widest. Stepped (not fluid clamp) so every value lands
+//  on the 8pt grid and blocks stay baseline-aligned.
+//
+//    $properties  property or space-list (`padding-top`, `margin-left margin-right`)
+//    $breaks      how many of the largest breakpoints participate
+//    $max         value at the widest breakpoint
+//    $step        px added per breakpoint (default 8 = one 8pt step)
+//
+//  e.g. scaled-spacing(padding-bottom, 6, 192px)
+//       → 152px base, +8 across the top 6 breakpoints → 192px on the widest.
+// -----------------------------------------------------------------------------
+@mixin scaled-spacing($properties, $breaks: 4, $max: 32px, $step: 8) {
+  $count: list.length(vars.$breakpoints);
+
+  @if $breaks < 1 or $breaks > $count {
+    @error "scaled-spacing: $breaks must be 1–#{$count} (got #{$breaks}).";
+  }
+
+  $value: $max - (($breaks - 1) * $step);
+  $start: ($count - $breaks) + 1;
+
+  @for $i from $start through $count {
+    @if $i == $start {
+      @each $property in $properties {
+        #{$property}: $value;
+      }
+    } @else {
+      @media all and (min-width: list.nth(vars.$breakpoints, $i)) {
+        @each $property in $properties {
+          #{$property}: $value;
+        }
+      }
+    }
+
+    $value: $value + $step;
+  }
+}
+
+// -----------------------------------------------------------------------------
+//  fluid-gutter — fluid horizontal spacing (the clamp counterpart to
+//  scaled-spacing). Computes the slope/base so you don't hand-write the middle
+//  term. Use where a smooth, unstepped gap reads better than the grid.
+// -----------------------------------------------------------------------------
+@mixin fluid-gutter($property, $min: 24px, $max: 80px, $min-bp: 360px, $max-bp: 1920px) {
+  $slope: math.div($max - $min, $max-bp - $min-bp);
+  $base: $max - ($slope * $max-bp);
+
+  #{$property}: clamp(
+          #{$min},
+          #{$base} + #{$slope * 100}vw,
+          #{$max}
+  );
+}

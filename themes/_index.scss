@@ -1,0 +1,12 @@
+// =============================================================================
+//  Theme layer — app-shell, chrome (nav/footer), base theme, typography, block
+//  spacing, and utilities. `theme-colors` is an opt-in re-brand example, so it
+//  is intentionally NOT loaded here.
+// =============================================================================
+@use "theme-spacing";
+@use "theme-layout";
+@use "typography";
+@use "class-utilities";
+@use "nav";
+@use "base-theme";
+@use "footer";

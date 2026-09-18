@@ -1,0 +1,104 @@
+// =============================================================================
+//  Color tokens · octet-scss
+//  ---------------------------------------------------------------------------
+//  Lean, brandable, all CSS custom properties (override anything at runtime).
+//
+//    1. Primitives — raw scales: primary / secondary / tertiary + neutral,
+//       nine tones each (100 lightest → 900 darkest, 500 = base).
+//    2. Semantic   — role tokens (brand, link, surface…) that point at the
+//       primitives. Style against THESE, not the raw scales.
+//
+//  Ordered customize-first: the things you re-brand come before the neutral
+//  scaffolding you usually keep. Re-brand by overriding a ramp — or a single
+//  semantic token — in your own :root; see themes/_theme-colors.scss.
+// =============================================================================
+
+:root {
+  // ===========================================================================
+  //  1 · Primitives
+  // ===========================================================================
+
+  // ---- Primary — indigo (default) ------------------------------------------
+  --primary-100: #eef1ff;
+  --primary-200: #dde3ff;
+  --primary-300: #c0caff;
+  --primary-400: #97a5fb;
+  --primary-500: #5b7cfa;
+  --primary-600: #4661e0;
+  --primary-700: #3a4cba;
+  --primary-800: #2e3b8f;
+  --primary-900: #212a63;
+
+  // ---- Secondary — teal ----------------------------------------------------
+  --secondary-100: #e7faf6;
+  --secondary-200: #c6f2e9;
+  --secondary-300: #93e6d5;
+  --secondary-400: #52d1bb;
+  --secondary-500: #22b39c;
+  --secondary-600: #199484;
+  --secondary-700: #16766a;
+  --secondary-800: #145d54;
+  --secondary-900: #0f4540;
+
+  // ---- Tertiary — amber ----------------------------------------------------
+  --tertiary-100: #fef4e0;
+  --tertiary-200: #fce4b8;
+  --tertiary-300: #f9d183;
+  --tertiary-400: #f5bd54;
+  --tertiary-500: #f0a92e;
+  --tertiary-600: #d98a17;
+  --tertiary-700: #b46c12;
+  --tertiary-800: #8c5312;
+  --tertiary-900: #6e4708;
+
+  // ---- Neutral — surfaces, text, lines -------------------------------------
+  --neutral-900: #0a0a0a;
+  --neutral-850: #101010;
+  --neutral-800: #161616;
+  --neutral-750: #1c1c1c;
+  --neutral-700: #242424;
+  --neutral-600: #2e2e2e;
+  --neutral-500: #4a4a4a;
+  --neutral-300: #8f8d88;
+  --neutral-200: #bfbeb9;
+  --neutral-100: #e8e5e2;
+
+  // ===========================================================================
+  //  2 · Semantic
+  // ===========================================================================
+
+  // ---- Brand — primary role ------------------------------------------------
+  --brand:        var(--primary-500);
+  --brand-hover:  var(--primary-400);
+  --brand-active: var(--primary-600);
+  --brand-subtle: var(--primary-900);   // tinted surface on dark
+
+  // ---- Accents — secondary / tertiary roles --------------------------------
+  --accent:    var(--secondary-500);
+  --highlight: var(--tertiary-500);
+
+  // ---- Interactive ---------------------------------------------------------
+  --link:       var(--primary-300);
+  --link-hover: var(--primary-200);
+  --focus-ring: var(--primary-400);
+
+  // ---- Surfaces — depth ladder ---------------------------------------------
+  --surface-page:     var(--neutral-850);
+  --surface-raised:   var(--neutral-800);
+  --surface-card:     var(--neutral-750);
+  --surface-elevated: var(--neutral-700);
+
+  // ---- Text ----------------------------------------------------------------
+  --text-primary:   var(--neutral-100);
+  --text-secondary: var(--neutral-200);
+  --text-muted:     var(--neutral-300);
+  --text-on-brand:  var(--neutral-900);   // dark text on a bright brand fill
+
+  // ---- Borders -------------------------------------------------------------
+  --border-subtle:  rgb(255 255 255 / 0.06);
+  --border-default: var(--neutral-600);
+  --border-strong:  var(--neutral-500);
+
+  // ---- Signal --------------------------------------------------------------
+  --danger: #ff4d4f;   // extend with --success / --warning as needed
+}

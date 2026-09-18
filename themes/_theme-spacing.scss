@@ -1,0 +1,19 @@
+@use "../abstracts" as *;
+
+// =============================================================================
+//  Block spacing — vertical rhythm between top-level blocks lives here, by
+//  design (one file for layout spacing). Everything steps on the 8pt grid.
+// =============================================================================
+
+// Space between stacked sections.
+section {
+  @include scaled-spacing(margin-bottom, 5, 88px);
+}
+
+// List item rhythm.
+.bullet-list,
+ol {
+  li:not(:last-child) {
+    @include scaled-spacing(margin-bottom, 2, 16px);
+  }
+}

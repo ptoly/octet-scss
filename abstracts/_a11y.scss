@@ -1,0 +1,80 @@
+@use "variables" as vars;
+
+// =============================================================================
+//  Accessibility primitives — AA foundations, on by default.
+//  Bring these in and the framework is accessible before you write a line:
+//  visible focus, screen-reader utilities, a skip link, and reduced-motion.
+// =============================================================================
+
+// ---- Focus ------------------------------------------------------------------
+// Every focusable element gets a visible, dark-theme-friendly ring by default.
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+// Opt-in override for a bespoke ring on a specific element.
+@mixin focus-visible($color: var(--focus-ring), $width: 2px, $offset: 2px) {
+  &:focus-visible {
+    outline: $width solid $color;
+    outline-offset: $offset;
+  }
+}
+
+// ---- Screen-reader-only -----------------------------------------------------
+// Visually hidden, but present for assistive tech.
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sr-only,
+.visually-hidden { @include sr-only; }   // .visually-hidden = legacy alias
+
+// Hidden until focused (skip links, "jump to" affordances).
+@mixin sr-only-focusable {
+  &:not(:focus):not(:focus-within) { @include sr-only; }
+}
+.sr-only-focusable { @include sr-only-focusable; }
+
+// ---- Skip link --------------------------------------------------------------
+// Hidden until focused, then pinned top-left above everything.
+@mixin skip-link {
+  @include sr-only-focusable;
+
+  &:focus {
+    position: fixed;
+    top: vars.gridx(2);
+    left: vars.gridx(2);
+    z-index: vars.$z-toast;
+    padding: vars.gridx(2) vars.gridx(3);
+    background: var(--surface-raised);
+    color: var(--text-primary);
+    border-radius: vars.$radius-md;
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+}
+.skip-link { @include skip-link; }
+
+// ---- Reduced motion ---------------------------------------------------------
+// AA by default: neutralise animation, transition, and smooth scroll for anyone
+// who asks for reduced motion — framework-wide. The transition() mixin (and any
+// hand-written motion) self-disables through this.
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,29 @@
+@use "../abstracts" as *;
+
+// =============================================================================
+//  CTA band — a centered call to action. Generic starter template.
+//  ---------------------------------------------------------------------------
+//  <section class="cta">
+//    <h2 class="cta__title">Ready to start?</h2>
+//    <p class="cta__text">One line of encouragement.</p>
+//    <a class="btn btn--primary" href="#">Get started</a>
+//  </section>
+// =============================================================================
+.cta {
+  background-color: var(--surface-raised);
+  border-radius: $radius-xl;
+  text-align: center;
+  @include scaled-spacing(padding-top padding-bottom, 5, 80px);
+  @include scaled-spacing(padding-left padding-right, 4, 32px);
+
+  // Keep the content column readable and centered.
+  > * {
+    max-width: $layout-readable-width;
+    margin-inline: auto;
+  }
+
+  &__text {
+    color: var(--text-secondary);
+    @include scaled-spacing(margin-top margin-bottom, 3, 24px);
+  }
+}

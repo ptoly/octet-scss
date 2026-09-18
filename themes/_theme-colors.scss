@@ -1,0 +1,27 @@
+// =============================================================================
+//  Example theme override — "olive" (octet's own palette)
+//  ---------------------------------------------------------------------------
+//  NOT loaded by default — the framework ships the generic indigo/teal/amber
+//  defaults from abstracts/_colors.scss. This file shows how to re-brand:
+//  override whole ramps for a full re-skin, or a few semantic tokens for a
+//  light touch. To use it, @use it from themes/_index.scss (after abstracts).
+// =============================================================================
+
+:root {
+  // Full re-skin — swap the primary ramp
+  --primary-100: #f4f4dd;
+  --primary-200: #e6e6b4;
+  --primary-300: #cfcf78;
+  --primary-400: #9a9a28;
+  --primary-500: rgb(93 93 0);    // olive — brand base
+  --primary-600: #4f4f00;
+  --primary-700: #3f3f00;
+  --primary-800: #2c2c00;
+  --primary-900: #1a1a00;
+
+  // Light-touch overrides — point semantic roles at bespoke values
+  --link:       #e8dda6;   // warm sand
+  --link-hover: #f0e05c;
+  --highlight:  #ffee10;   // bright yellow accent
+  --focus-ring: #f0e05c;
+}

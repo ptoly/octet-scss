@@ -1,0 +1,10 @@
+@use "../abstracts" as *;
+
+.bullet-list {
+  list-style: disc;
+
+  li {
+    font-size: inherit;
+    margin-left: gridx(6);   // 24px
+  }
+}

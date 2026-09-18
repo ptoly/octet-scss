@@ -1,0 +1,43 @@
+@use "../abstracts" as *;
+
+// =============================================================================
+//  Footer — generic site footer. Starter template.
+//  ---------------------------------------------------------------------------
+//  <footer class="footer">
+//    <nav class="footer__links" aria-label="Footer">
+//      <a href="/about">About</a>
+//      <a href="/contact">Contact</a>
+//    </nav>
+//    <p class="footer__note">© 2026 Your Name</p>
+//  </footer>
+// =============================================================================
+.footer {
+  text-align: center;
+  background-color: var(--surface-raised);
+  color: var(--text-secondary);
+  @include scaled-spacing(padding-top padding-bottom, 4, 48px);
+  @include scaled-spacing(padding-left padding-right, 3, 24px);
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: gridx(4) gridx(6);
+
+    a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      @include transition(color);
+
+      @include hover-only {
+        &:hover { color: var(--link); }
+      }
+    }
+  }
+
+  &__note {
+    @include scaled-spacing(margin-top, 3, 24px);
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+}

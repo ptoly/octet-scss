@@ -1,0 +1,9 @@
+@use "../config" as cfg;
+
+// Center content and cap it at the project's max width.
+@mixin max-width {
+  max-width: cfg.$layout-max-width;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -1,0 +1,76 @@
+@use "../abstracts" as *;
+
+// =============================================================================
+//  Nav — a generic sidebar/vertical navigation. Starter template.
+//  ---------------------------------------------------------------------------
+//  <nav class="nav" aria-label="Primary" data-open="false">
+//    <a class="nav__brand" href="/">Brand</a>
+//    <button class="nav__toggle" aria-expanded="false" aria-controls="nav-menu">
+//      <span class="sr-only">Toggle menu</span>
+//    </button>
+//    <ul class="nav__list" id="nav-menu">
+//      <li><a class="nav__link" href="/" aria-current="page">Home</a></li>
+//      <li><a class="nav__link" href="/work">Work</a></li>
+//    </ul>
+//  </nav>
+//
+//  On narrow screens the list collapses; a script toggles data-open="true"
+//  (and aria-expanded) on the toggle button.
+// =============================================================================
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: gridx(4);
+  padding: gridx(6) gridx(4);
+  background-color: var(--surface-raised);
+
+  &__brand {
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+
+  &__toggle {
+    align-self: flex-start;
+
+    @include from(720px) { display: none; }   // wide: list is always visible
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: gridx(1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    // Collapse on narrow screens; reveal when toggled open.
+    @include until(720px) {
+      display: none;
+
+      .nav[data-open="true"] & { display: flex; }
+    }
+  }
+
+  &__link {
+    display: block;
+    padding: gridx(2) gridx(3);
+    border-radius: $radius-md;
+    color: var(--text-secondary);
+    text-decoration: none;
+    @include transition(background-color color);
+
+    @include hover-only {
+      &:hover {
+        background-color: var(--surface-card);
+        color: var(--text-primary);
+      }
+    }
+
+    &[aria-current] {
+      background-color: var(--surface-card);
+      color: var(--text-primary);
+    }
+  }
+}

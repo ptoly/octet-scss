@@ -1,0 +1,43 @@
+@use "../abstracts" as *;
+
+// =============================================================================
+//  Page — a basic content page: header + readable-width body.
+//  Generic starter template.
+//  ---------------------------------------------------------------------------
+//  <main class="page">
+//    <header class="page__header">
+//      <h1 class="page__title">Page title</h1>
+//      <p class="page__intro">A short introduction.</p>
+//    </header>
+//    <div class="page__body">
+//      <p>…prose…</p>
+//    </div>
+//  </main>
+// =============================================================================
+.page {
+  @include max-width;
+  @include scaled-spacing(padding-top padding-bottom, 6, 96px);
+
+  &__header {
+    max-width: $layout-readable-width;
+    @include scaled-spacing(margin-bottom, 5, 64px);
+  }
+
+  &__title {
+    @include fluid-font-size(28px, 48px);
+  }
+
+  &__intro {
+    color: var(--text-secondary);
+    @include scaled-spacing(margin-top, 3, 20px);
+  }
+
+  &__body {
+    max-width: $layout-readable-width;
+
+    // Vertical rhythm between flow elements.
+    > * + * {
+      @include scaled-spacing(margin-top, 3, 24px);
+    }
+  }
+}

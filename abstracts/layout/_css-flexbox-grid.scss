@@ -1,0 +1,80 @@
+// Based off https://github.com/1000ch/grd-sass
+@use "sass:math" as math;
+
+$default-columns: 12 !default;
+$default-gap: 0px !default;
+
+@mixin grid {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+@mixin cell {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  margin-bottom: $default-gap;
+}
+
+.fb-grid {
+  @include grid;
+}
+
+.fb-cell {
+  width: 100%;
+
+  @include cell;
+}
+
+@function grid-gap($width, $gap: $default-gap) {
+  $calc: (1 - $width);
+
+  @return ($calc * $gap);
+}
+
+@for $index from 1 through $default-columns {
+  .fb-cell.span#{$index}of#{$default-columns} {
+    @if $index != $default-columns {
+      $width: math.div($index, $default-columns);
+      $percent-width: math.percentage($width);
+      $grid-gap: grid-gap($width);
+
+      width: calc(#{$percent-width} - #{$grid-gap});
+    } @else {
+      width: 100%;
+    }
+  }
+}
+
+@mixin fb-responsive-grid(
+  $max,
+  $min,
+  $container-max: 999999px,
+  $name-space: ".fb-cell",
+  $gap: $default-gap
+) {
+  @include grid;
+  #{$name-space} {
+    width: 100%;
+
+    @include from($max) {
+      $grid-gap: grid-gap(0.5, $gap);
+
+      flex: 0 0 calc(50% - #{$grid-gap});
+    }
+
+    @if $max * 2 < $container-max {
+      @include from($max * 2) {
+        $grid-gap: grid-gap(0.3333, $gap);
+
+        flex: 0 0 calc(33.3333% - #{$grid-gap});
+      }
+
+      @include from($max * 3) {
+        $grid-gap: grid-gap(0.25, $gap);
+
+        flex: 0 0 calc(25% - #{$grid-gap});
+      }
+    }
+  }
+}

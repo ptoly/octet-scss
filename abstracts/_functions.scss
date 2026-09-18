@@ -1,0 +1,6 @@
+@use "sass:math";
+
+// Round $value up to the nearest multiple of $nearest (keeps values on-grid).
+@function roundto($value, $nearest) {
+  @return math.ceil(math.div($value, $nearest)) * $nearest;
+}

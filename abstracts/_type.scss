@@ -1,0 +1,49 @@
+@use "sass:math";
+@use "sass:list" as list;
+@use "variables" as vars;
+@use "functions" as fn;
+
+// Modular fluid font sizing on an 8px vertical grid.
+//   font-size scales fluidly (clamp); line-height steps at each breakpoint so
+//   it stays on the baseline grid.
+@mixin fluid-font-size(
+  $min-size: 16px,
+  $max-size: 24px,
+  $min-bp: 360px,
+  $max-bp: 1440px
+) {
+  $line-height: $min-size;
+  $slope: math.div($max-size - $min-size, $max-bp - $min-bp);
+  $base: $max-size - ($slope * $max-bp);
+
+  // fluid font-size, self-bounding — no media query needed
+  font-size: clamp(
+          #{$min-size},
+          #{$base} + #{$slope * 100}vw,
+          #{$max-size}
+  );
+  line-height: $min-size;
+
+  // Step line-height up on the grid across the breakpoint scale
+  @each $bp in vars.$breakpoints {
+    $this-line-height: $line-height;
+    $index: list.index(vars.$breakpoints, $bp);
+
+    @if $index <= 6 {
+      $max-bp: list.nth(vars.$breakpoints, $index + 1) - 1;
+      $max-font-size: $base + ($max-bp * $slope);
+
+      @if $max-font-size > $line-height {
+        $line-height: fn.roundto($max-font-size + 8, 8);
+
+        @media all and (min-width: $bp) {
+          line-height: $line-height;
+        }
+      }
+    }
+  }
+
+  @media all and (min-width: $max-bp) {
+    line-height: $max-size + 8;
+  }
+}

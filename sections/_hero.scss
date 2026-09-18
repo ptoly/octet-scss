@@ -1,0 +1,40 @@
+@use "../abstracts" as *;
+
+// =============================================================================
+//  Hero — headline, lede, and CTAs. Generic starter template.
+//  ---------------------------------------------------------------------------
+//  <section class="hero">
+//    <h1 class="hero__title">Your headline</h1>
+//    <p class="hero__lede">One supporting sentence that sets the scene.</p>
+//    <div class="hero__actions">
+//      <a class="btn btn--primary" href="#">Primary</a>
+//      <a class="btn" href="#">Secondary</a>
+//    </div>
+//  </section>
+// =============================================================================
+.hero {
+  @include max-width;
+  @include scaled-spacing(padding-top padding-bottom, 6, 120px);
+  text-align: center;
+
+  &__title {
+    @include fluid-font-size(32px, 64px);
+    max-width: $layout-readable-width;
+    margin-inline: auto;
+  }
+
+  &__lede {
+    max-width: $layout-readable-width;
+    margin-inline: auto;
+    color: var(--text-secondary);
+    @include scaled-spacing(margin-top, 3, 24px);
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: gridx(3);
+    @include scaled-spacing(margin-top, 4, 40px);
+  }
+}

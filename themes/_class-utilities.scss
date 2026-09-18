@@ -1,0 +1,35 @@
+@use "../abstracts" as *;
+
+// =============================================================================
+//  Utility classes
+//  ---------------------------------------------------------------------------
+//  Small, single-purpose helpers. Reach for these on markup rather than writing
+//  one-off rules; anything larger belongs in a component or template.
+// =============================================================================
+
+// Keep text on one line (e.g. buttons, labels, nowrap table cells).
+.no-wrap { white-space: nowrap; }
+
+// Center inline/inline-block content and text.
+.center { text-align: center; }
+
+// Cap an element at the overall content width and (typically) center it.
+.max-width { max-width: $layout-max-width; }
+
+// Cap an element at the max-readability measure (~720px) for comfortable line
+// length — use on prose columns.
+.readability-width { max-width: $layout-readable-width; }
+
+// Strip a <button> (or other interactive element) back to bare styles, so it
+// can be styled from scratch while staying a real, focusable control.
+.unstyled {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;   // buttons don't inherit font by default — the one people forget
+  color: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}

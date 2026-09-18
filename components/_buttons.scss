@@ -1,0 +1,53 @@
+@use "../abstracts" as *;
+
+// =============================================================================
+//  Buttons — generic, tokenized, accessible.
+//  ---------------------------------------------------------------------------
+//  Base `.btn` is a neutral button; add a modifier for intent. Works on
+//  <button> and <a>. The focus ring comes from the a11y baseline
+//  (:focus-visible); motion self-disables under prefers-reduced-motion.
+// =============================================================================
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: gridx(2);
+  padding: gridx(2) gridx(4);
+  border: 1px solid var(--border-strong);
+  border-radius: $radius-md;
+  background-color: var(--surface-raised);
+  color: var(--text-primary);
+  font: inherit;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;   // usable on <a class="btn">
+  cursor: pointer;
+  @include transition(background-color border-color color);
+
+  &:hover { border-color: var(--brand); }
+
+  &:disabled,
+  &[aria-disabled="true"] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+// Primary — brand fill (the CTA)
+.btn--primary {
+  background-color: var(--brand);
+  border-color: transparent;
+  color: var(--text-on-brand);
+
+  &:hover  { background-color: var(--brand-hover);  border-color: transparent; }
+  &:active { background-color: var(--brand-active); }
+}
+
+// Ghost — minimal, text-forward
+.btn--ghost {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--link);
+
+  &:hover { background-color: var(--surface-raised); }
+}

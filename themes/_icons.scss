@@ -1,0 +1,87 @@
+@use "sass:string";
+
+// =============================================================================
+//  Icon helpers (theme) — inline-SVG encoding + a couple of icon treatments.
+//  Theme-specific; not part of the generic core.
+// =============================================================================
+
+// Replace every occurrence of $search in $string with $replace.
+@function str-replace($string, $search, $replace: '') {
+  $index: string.index($string, $search);
+
+  @if $index {
+    @return string.slice($string, 1, $index - 1) + $replace + str-replace(string.slice($string, $index + string.length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+// URL-encode a raw SVG string so it can live in a data: URI.
+@function url-encode($string) {
+  $map: (
+          "%": "%25",
+          "<": "%3C",
+          ">": "%3E",
+          " ": "%20",
+          "!": "%21",
+          "*": "%2A",
+          "'": "%27",
+          '"': "%22",
+          "(": "%28",
+          ")": "%29",
+          ";": "%3B",
+          ":": "%3A",
+          "@": "%40",
+          "&": "%26",
+          "=": "%3D",
+          "+": "%2B",
+          "$": "%24",
+          ",": "%2C",
+          "/": "%2F",
+          "?": "%3F",
+          "#": "%23",
+          "[": "%5B",
+          "]": "%5D"
+  );
+  $new: $string;
+
+  @each $search, $replace in $map {
+    $new: str-replace($new, $search, $replace);
+  }
+
+  @return $new;
+}
+
+// Wrap an SVG string as an inline background-image data URI.
+@function inline-svg($string) {
+  @return url('data:image/svg+xml;charset=utf-8,#{url-encode($string)}');
+}
+
+// Inject size/colour into a templated SVG (placeholders `icon-width`/`icon-color`).
+@function prepare-icon($icon, $color, $dimension) {
+  $icon-set-dimension: str-replace($icon, "icon-width", $dimension);
+  $icon-set-color: str-replace($icon-set-dimension, "icon-color", $color);
+
+  @return $icon-set-color;
+}
+
+$svg-arrow-right: '<svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_74_2754)"><path d="M9.17327 11.9568C9.44745 11.9568 9.72444 11.8493 9.96087 11.6371L15.2624 6.73988C15.4823 6.5429 15.6159 6.25858 15.6159 5.97992C15.6159 5.70128 15.4823 5.41696 15.2624 5.21997L9.96087 0.319704C9.72444 0.107439 9.44745 0 9.17327 0C8.53482 0 8.08604 0.421032 8.08604 0.981831C8.08604 1.27837 8.21486 1.52602 8.42343 1.70946L9.99497 3.19065L13.2994 5.97992L9.99497 8.7692L8.42343 10.2474C8.21486 10.4308 8.08604 10.6784 8.08604 10.975C8.08604 11.5358 8.53482 11.9568 9.17327 11.9568ZM1.14101 7.01198H10.3549L13.4437 6.8355C14.0161 6.80362 14.3978 6.49135 14.3978 5.97992C14.3978 5.46851 14.0161 5.15624 13.4437 5.12436L10.3549 4.94788H1.14101C0.461505 4.94788 0 5.36935 0 5.97992C0 6.59051 0.461505 7.01198 1.14101 7.01198Z" fill-opacity="0.85" fill="icon-color"/></g><defs><clipPath id="clip0_74_2754"><rect width="16" height="12" fill="white"/></clipPath></defs></svg>';
+
+// Small right-arrow appended after a link.
+@mixin link-arrow-right($color: #fff, $size: 16px, $gap: 6px) {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+
+  &::after {
+    content: "";
+    display: inline-block;
+    width: $size;
+    height: $size;
+    margin-left: $gap;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-image: inline-svg(prepare-icon($svg-arrow-right, $color, $size));
+  }
+}
+

@@ -1,0 +1,23 @@
+@mixin until($device) {
+  @media screen and (width < #{$device}) {
+    @content;
+  }
+}
+
+@mixin from($device) {
+  @media screen and (width >= #{$device}) {
+    @content;
+  }
+}
+
+@mixin hover-only {
+  @media (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}
+
+@mixin touch-only {
+  @media (hover: none) {
+    @content;
+  }
+}

@@ -1,0 +1,40 @@
+@use "../abstracts" as *;
+
+// =============================================================================
+//  Card grid — a responsive grid of cards. Generic starter template.
+//  ---------------------------------------------------------------------------
+//  <section class="card-grid">
+//    <article class="card">
+//      <h3 class="card__title">Card title</h3>
+//      <p class="card__body">A sentence or two of description.</p>
+//    </article>
+//    <!-- …more .card… -->
+//  </section>
+// =============================================================================
+.card-grid {
+  @include max-width;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  @include scaled-spacing(gap, 4, 32px);
+  @include scaled-spacing(padding-top padding-bottom, 5, 64px);
+}
+
+.card {
+  padding: gridx(6);
+  background-color: var(--surface-card);
+  border: 1px solid var(--border-default);
+  border-radius: $radius-lg;
+  @include elevation(2);
+  @include transition(transform box-shadow);
+
+  // Lift on hover — but only on true hover devices.
+  @include hover-only {
+    &:hover {
+      transform: translateY(-2px);
+      @include elevation(4);
+    }
+  }
+
+  &__title { margin-bottom: gridx(2); }
+  &__body  { color: var(--text-secondary); }
+}

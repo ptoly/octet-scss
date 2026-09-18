@@ -1,0 +1,64 @@
+// =============================================================================
+//  Design tokens · octet-scss
+//  ---------------------------------------------------------------------------
+//  Compile-time framework constants — grid, type, radius, breakpoints, layout,
+//  motion. All SCSS: these feed media queries and Sass math, so they can't be
+//  runtime custom properties. Project-specific dimensions live in _config.scss.
+// =============================================================================
+
+// ---- Grid --------------------------------------------------------------------
+//  $grid-base is the vertical-rhythm unit (4px here; 8px for a coarser rhythm).
+//  gridx($n) returns a multiple of it, so any height or spacing built with
+//  gridx() stays locked to the baseline grid.
+$grid-base: 4px;
+
+@function gridx($value) {
+  @return $grid-base * $value;   // $value × the rhythm unit → an on-grid length
+}
+
+// ---- Typography --------------------------------------------------------------
+$font-family-sans:   omnes-pro, sans-serif;
+$font-family-narrow: omnes-narrow, sans-serif;   // reserved for narrow display
+$font-family-serif:  gelica, sans-serif;
+$font-size-base:     18px;
+$font-ratio-minor:   1.067;   // modular ratio — small screens
+$font-ratio-major:   1.333;   // modular ratio — large screens
+
+// ---- Radius ------------------------------------------------------------------
+$radius-sm: 2px;   // subtle — inputs, chips
+$radius-md: 4px;   // default (1x grid)
+$radius-lg: 8px;   // cards (2x grid)
+$radius-xl: 16px;  // large surfaces (4x grid)
+
+// ---- Breakpoints — the one responsive scale ---------------------------------
+//  Single source of truth: drives vertical rhythm (scaled-spacing, modular-
+//  spacing, fluid-font-size) AND is the menu that from()/until() pick from, so
+//  structural reflows land on rhythm lines. SCSS — media queries can't read
+//  var(). Project reflow points live in _config.scss.
+$breakpoints: 360px, 540px, 720px, 900px, 1280px, 1366px, 1441px;
+
+// ---- Layout ------------------------------------------------------------------
+$layout-gutter:         gridx(18);   // container horizontal offset
+$layout-readable-width: 720px;       // max-readability text measure (identity)
+$layout-global-height:  gridx(16);   // vertical-rhythm anchor (reserved)
+
+// ---- Motion ------------------------------------------------------------------
+//  Durations
+$duration-fast: 120ms;   // micro-interactions (hover, toggle)
+$duration-base: 240ms;   // default
+$duration-slow: 400ms;   // larger transitions
+//  Easings
+$ease-standard: cubic-bezier(0.2, 0, 0, 1);   // general UI movement
+$ease-out:      cubic-bezier(0, 0, 0, 1);     // entrances (decelerate)
+$ease-in:       cubic-bezier(0.4, 0, 1, 1);   // exits (accelerate)
+
+// ---- Z-index — named stacking layers -----------------------------------------
+//  Reach for a token, not a magic number — keeps stacking legible as the
+//  framework grows. Local, self-contained stacking can still use small literals.
+$z-base:    0;
+$z-raised:  10;    // lifted within local flow (cards, sticky-in-flow)
+$z-sticky:  100;   // sticky headers / rails
+$z-nav:     200;   // primary nav / left rail
+$z-overlay: 300;   // backdrops, dropdown menus
+$z-modal:   400;   // dialogs
+$z-toast:   500;   // transient notifications

@@ -1,0 +1,44 @@
+@use "../abstracts" as *;
+
+// =============================================================================
+//  Article — long-form template with an aside/TOC that appears on wide screens.
+//  Generic starter template.
+//  ---------------------------------------------------------------------------
+//  <article class="article">
+//    <div class="article__main">
+//      <h1>Title</h1>
+//      <p>…prose…</p>
+//    </div>
+//    <aside class="article__aside">
+//      <!-- table of contents, meta, etc. -->
+//    </aside>
+//  </article>
+// =============================================================================
+.article {
+  @include max-width;
+  @include scaled-spacing(padding-top padding-bottom, 6, 96px);
+  display: grid;
+  gap: gridx(8);
+
+  // Two columns once there's room: readable measure + a flexible aside.
+  @include from(900px) {
+    grid-template-columns: minmax(0, $layout-readable-width) 1fr;
+  }
+
+  &__main {
+    max-width: $layout-readable-width;
+
+    > * + * {
+      @include scaled-spacing(margin-top, 3, 24px);
+    }
+  }
+
+  &__aside {
+    align-self: start;
+
+    @include from(900px) {
+      position: sticky;
+      top: gridx(6);
+    }
+  }
+}
