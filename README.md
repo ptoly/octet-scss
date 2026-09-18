@@ -1,58 +1,56 @@
 # octet-scss
 
-**A small, brandable SCSS framework built on an 8-point grid.** The name is the
-point: an *octet* is eight, and everything — spacing, type rhythm, layout —
-steps on an 8pt grid (a 4px base unit, doubled for rhythm).
+**An 8-point grid SCSS framework. Spacing, type, and layout all step on eight.**
 
-## Why it exists
+I built this because I kept rebuilding it. Every project opened the same way — set the grid, size the type, wire the spacing, fix the reset — so I stopped starting over. octet-scss is the foundation I've carried site to site for years, tightened a little each time. Sharing it was always the plan. It just took me a while to clean it up enough to admit I wrote it.
 
-To make a good typographic and spatial foundation the default: consistent 8pt
-spacing, responsive/scalable type, and a responsive layout system, without
-re-deriving them each project. It speaks in **pixels** (designers reason in
-pixels), keeps runtime concerns as CSS custom properties and compile-time
-concerns as SCSS.
+## Why: pixels, and a grid that holds
+
+Designers think in pixels. Figma speaks pixels, every redline says 24px, every handoff tool measures in pixels. octet-scss keeps that unit end to end, so the number in the design file is the number in the code — no translation layer, no drift between what was drawn and what shipped. The math stays readable too: `gridx(4)` is 16px, not a decoded ratio.
+
+The grid is the other half. One 4px base, doubled to 8 for rhythm, drives spacing and type together — so vertical rhythm lines up across blocks instead of by accident. Consistent spacing, a readable measure, type that scales: the defaults you'd set up anyway, already set up.
+
+*One tradeoff, stated plainly: px honors browser zoom — which satisfies WCAG 1.4.4, Resize Text — but not a user's default font-size preference. If honoring that preference matters for your project, override the type tokens in rem.*
 
 ## Features
 
-- **8pt grid** — `$grid-base` (4px) + `gridx($n)`; `scaled-spacing` steps stay on the baseline
-- **Responsive, scalable typography** — `fluid-font-size()` (a self-bounding `clamp()` with line-height snapped to the grid)
+- **8pt grid** — `$grid-base` (4px) and `gridx($n)`; spacing steps stay on the baseline
+- **Responsive, scalable type** — `fluid-font-size()`, a self-bounding `clamp()` with line-height snapped to the grid
 - **Responsive layout mixins** — `from()` / `until()`, `display-grid`, `max-width`, `scaled-spacing`
-- **Stepped layout spacing** — one breakpoint scale drives vertical rhythm; the convention is to keep block spacing in a single file
-- **Updated CSS reset** — box-sizing, zeroed margins, sensible media/element defaults
+- **Single-file spacing** — one breakpoint scale drives vertical rhythm, all in one place
+- **Accessibility-ready (WCAG AA)** — focus-visible ring, `.sr-only`, skip link, reduced-motion reset, on by default
+- **Motion tokens** — durations, easings, and a `transition()` mixin that self-disables under reduced-motion
+- **Z-index scale** — named stacking layers, no magic numbers
+- **Elevation** — layered shadows, levels 1–24
+- **Modern CSS reset** — box-sizing, zeroed margins, sensible element defaults
 - **Max-readability measure** — `$layout-readable-width` (720px) for comfortable line length
-
-Also included and wired: **AA-by-default accessibility** (global focus ring,
-`.sr-only`, skip link, reduced-motion reset), **motion tokens + a `transition()`
-mixin**, a **z-index scale**, and **elevation** (layered shadows, levels 1–24).
 
 ## Requirements
 
-- **Dart Sass**, using the module system — `@use` / `@forward` (there is no
-  `@import` in the source). Developed against Dart Sass **1.99**.
+**Dart Sass**, using the module system — `@use` / `@forward` (no `@import` in the source). Built against Dart Sass 1.99.
 
 ## Install
 
-Not published to npm — it's a GitHub repo. Either:
+Not on npm yet — it's a GitHub repo. Two ways in:
 
 ```bash
-# clone
+# clone it
 git clone https://github.com/ptoly/octet-scss.git
 
-# …or add as a submodule
+# …or add it as a submodule
 git submodule add https://github.com/ptoly/octet-scss.git src/octet-scss
 ```
 
 ## Quick start
 
-Import the core (tokens, mixins, reset, a11y), then override a token or two in
-your own `:root` — it loads after the framework, so your values win:
+Drop the core into your styles, override a token or two, done:
 
 ```scss
-@use "octet-scss/abstracts" as *;   // design tokens + mixins + reset + a11y
+@use "octet-scss/abstracts" as *;   // tokens, mixins, reset, a11y, motion
 
 :root {
-  --primary-500: rebeccapurple;   // re-brand a ramp…
-  --link:        #e8dda6;         // …or a single semantic token
+  --primary-500: rebeccapurple;   // re-brand a whole ramp…
+  --link: #e8dda6;                // …or nudge one semantic token
 }
 
 .card {
@@ -62,6 +60,8 @@ your own `:root` — it loads after the framework, so your values win:
   @include elevation(2);
 }
 ```
+
+That's enough to build with. For a real site — app shell, nav, footer, your own palette — start from the **starter theme**: copy it out of the submodule so you can pull framework updates without your changes ever conflicting. The full walkthrough is in [`starter-theme/README.md`](starter-theme/README.md).
 
 ## Token & mixin reference
 
@@ -127,10 +127,19 @@ Sass config needed:
 :root { --brand: /* your brand */; --surface-page: /* your bg */; }
 ```
 
-SCSS tokens (`$breakpoints`, `$radius-*`, grid, type, motion, z-index) are
-**compile-time** and fixed — change them by editing your own copy of the theme,
-not via `@use … with()` (they are not `!default`; the only `!default` vars are
-the flexbox grid's `$default-columns` / `$default-gap`).
+Most SCSS tokens (`$breakpoints`, `$radius-*`, motion, z-index, layout
+dimensions) are **compile-time and fixed** — change them by editing your own
+theme copy. Two are `!default` and configurable at import, since projects
+routinely re-base them:
+
+```scss
+@use "octet-scss/abstracts" as * with (
+  $grid-base: 4px,       // default 8px — the 8pt rhythm unit
+  $font-size-base: 18px  // default 16px
+);
+```
+
+(The flexbox grid's `$default-columns` / `$default-gap` are `!default` too.)
 
 A generic example theme ships in **`starter-theme/`** (renamed from `themes/`) —
 including `_theme-colors.scss`, an opt-in "olive" re-brand you can copy to
