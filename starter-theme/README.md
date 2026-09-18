@@ -64,8 +64,9 @@ Because your `brand` loads **after** the framework's `:root`, your values win.
   them from `main.scss`. Use the framework mixins (`scaled-spacing`,
   `fluid-font-size`, `from()`/`until()`, `elevation`, `transition`) and tokens
   (`var(--brand)`, `$radius-md`, `gridx()`, `$breakpoints`).
-- **Everything is accessible by default** — focus rings, `.sr-only`, skip links,
-  and reduced-motion ship in the framework core.
+- **Accessibility primitives ship in the core** — focus rings, `.sr-only`,
+  skip links, and reduced-motion are on by default. Wiring them into real,
+  conformant pages (semantic markup, contrast, focus order) is your part.
 
 The framework core is documented in `octet-scss` itself; this theme only depends
 on `@use "../octet-scss/abstracts"` (and, optionally, `components`).
