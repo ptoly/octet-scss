@@ -17,7 +17,7 @@ The grid is the other half. One 4px base, doubled to 8 for rhythm, drives spacin
 - **8pt grid** — `$grid-base` (8px) and `gridx($n)` for on-grid vertical rhythm; spacing steps stay on the baseline
 - **Responsive, scalable type** — `fluid-font-size()`, a self-bounding `clamp()` with line-height snapped to the grid
 - **Responsive layout mixins** — `from()` / `until()`, `display-grid`, `max-width`, `scaled-spacing`
-- **Single-file spacing** — one breakpoint scale drives vertical rhythm, all in one place
+- **Single-file spacing** — one breakpoint scale drives vertical rhythm, all in one place, for more consistency (see more below)
 - **Accessibility-ready (WCAG AA)** — focus-visible ring, `.sr-only`, skip link, reduced-motion reset, on by default
 - **Motion tokens** — durations, easings, and a `transition()` mixin that self-disables under reduced-motion
 - **Z-index scale** — named stacking layers, no magic numbers
