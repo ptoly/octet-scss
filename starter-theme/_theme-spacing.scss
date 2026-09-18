@@ -11,11 +11,11 @@
 //     internal to a component (padding inside a card, say) co-locates with it;
 //     it's the between-block spacing that centralizes.
 //
-//  2. margin-bottom, never margin-top. Every block pushes the next one DOWN,
+//  2. margin-bottom, (almost) never margin-top (Consistent exception is margin-top
+//     for the page content below the header). Every block pushes the next one DOWN,
 //     so spacing flows one direction — top to bottom, the way you read it.
 //     Margins never fight or double up, and the gap between two blocks always
-//     lives on the block above. The rare exception is an element that
-//     genuinely sits below another (a caption under its image).
+//     lives on the block above = much more consistency.
 //
 //  Everything steps on the 8pt grid via scaled-spacing() across $breakpoints,
 //  so rhythm stays on the baseline as the viewport grows.
