@@ -28,7 +28,7 @@ p {
   line-height: 32px;
   font-size: 18px;
 
-  @include until($layout-single-col) {
+  @include until(720px) {   // drop to a single readable column on narrow screens
     font-size: 16px;
     line-height: 24px;
   }

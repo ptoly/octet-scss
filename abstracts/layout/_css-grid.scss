@@ -1,8 +1,12 @@
 @use "../variables" as vars;
-@use "../config" as cfg;
 @use "../responsive-mixins" as mq;
 @use "spacing-mixins" as space;
 
+// =============================================================================
+//  CSS grid — a grid-container helper plus column utility classes (.cg-cols-*).
+// =============================================================================
+
+// Grid container: auto rows + a scaled gap.
 @mixin display-grid {
   display: grid;
   grid-template-rows: auto;
@@ -57,7 +61,7 @@
   display: grid;
   grid-template-columns:
         [full-start] minmax(vars.gridx(6), 1fr)
-        [main-start] minmax(0, cfg.$layout-max-width)
+        [main-start] minmax(0, vars.$layout-max-width)
         [main-end] minmax(vars.gridx(6), 1fr) [full-end];
 
   > * {

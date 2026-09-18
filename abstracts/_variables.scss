@@ -7,20 +7,22 @@
 // =============================================================================
 
 // ---- Grid --------------------------------------------------------------------
-//  $grid-base is the vertical-rhythm unit (4px here; 8px for a coarser rhythm).
-//  gridx($n) returns a multiple of it, so any height or spacing built with
-//  gridx() stays locked to the baseline grid.
-$grid-base: 4px;
+//  $grid-base is the vertical-rhythm unit (8px here; drop to 4px for a finer
+//  rhythm). gridx($n) returns a multiple of it — use it for HEIGHTS and
+//  VERTICAL spacing (margins/padding) so blocks stay on the baseline grid.
+//  Horizontal / responsive width is fluid (clamp), not gridx.
+//  Overridable at import: @use "octet-scss/abstracts" with ($grid-base: 4px).
+$grid-base: 8px !default;
 
 @function gridx($value) {
-  @return $grid-base * $value;   // $value × the rhythm unit → an on-grid length
+  @return $grid-base * $value;   // $value × the rhythm unit → an on-grid height
 }
 
 // ---- Typography --------------------------------------------------------------
 $font-family-sans:   omnes-pro, sans-serif;
 $font-family-narrow: omnes-narrow, sans-serif;   // reserved for narrow display
 $font-family-serif:  gelica, sans-serif;
-$font-size-base:     18px;
+$font-size-base:     16px !default;
 $font-ratio-minor:   1.067;   // modular ratio — small screens
 $font-ratio-major:   1.333;   // modular ratio — large screens
 
@@ -38,7 +40,7 @@ $radius-xl: 16px;  // large surfaces (4x grid)
 $breakpoints: 360px, 540px, 720px, 900px, 1280px, 1366px, 1441px;
 
 // ---- Layout ------------------------------------------------------------------
-$layout-gutter:         gridx(18);   // container horizontal offset
+$layout-max-width:      1640px !default; // overall content max width (overridable)
 $layout-readable-width: 720px;       // max-readability text measure (identity)
 $layout-global-height:  gridx(16);   // vertical-rhythm anchor (reserved)
 
