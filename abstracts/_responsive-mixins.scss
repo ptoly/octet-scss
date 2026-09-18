@@ -1,21 +1,35 @@
+// =============================================================================
+//  Responsive mixins — media-query wrappers.
+//  ---------------------------------------------------------------------------
+//  Width breakpoints take a value from the $breakpoints scale (see
+//  _variables.scss). from() and until() use >= and < on the SAME value, so a
+//  from($x) block and an until($x) block are exact complements — no overlap,
+//  no gap. Hover is keyed off pointer type, never width.
+// =============================================================================
+
+// Below $device (max-width). Pair with from($device) for a clean split.
 @mixin until($device) {
   @media screen and (width < #{$device}) {
     @content;
   }
 }
 
+// At $device and up (min-width).
 @mixin from($device) {
   @media screen and (width >= #{$device}) {
     @content;
   }
 }
 
+// True hover devices only (mouse/trackpad) — for hover affordances that
+// shouldn't fire on touch.
 @mixin hover-only {
   @media (hover: hover) and (pointer: fine) {
     @content;
   }
 }
 
+// Touch / no-hover devices.
 @mixin touch-only {
   @media (hover: none) {
     @content;

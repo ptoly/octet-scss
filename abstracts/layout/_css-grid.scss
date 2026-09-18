@@ -3,6 +3,11 @@
 @use "../responsive-mixins" as mq;
 @use "spacing-mixins" as space;
 
+// =============================================================================
+//  CSS grid — a grid-container helper plus column utility classes (.cg-cols-*).
+// =============================================================================
+
+// Grid container: auto rows + a scaled gap.
 @mixin display-grid {
   display: grid;
   grid-template-rows: auto;

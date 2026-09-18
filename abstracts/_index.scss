@@ -1,7 +1,9 @@
-@forward "reset";
-@forward "a11y";
+// Token modules first, so `@use "octet-scss/abstracts" with (…)` can configure
+// their !default vars ($grid-base, $font-size-base) before anything reads them.
 @forward "variables";
 @forward "config";
+@forward "reset";
+@forward "a11y";
 @forward "colors";
 @forward "functions";
 @forward "motion";

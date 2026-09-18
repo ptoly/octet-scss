@@ -1,4 +1,8 @@
-// Based off https://github.com/1000ch/grd-sass
+// =============================================================================
+//  Flexbox grid — a flex-based column grid (based on 1000ch/grd-sass).
+//  NOTE: not used by the framework or starter-theme; kept as an optional
+//  helper (see README, "Currently unused").
+// =============================================================================
 @use "sass:math" as math;
 
 $default-columns: 12 !default;
