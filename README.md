@@ -6,7 +6,7 @@ I built this because I kept rebuilding it. Every project opened the same way —
 
 ## Why: pixels, and a grid that holds
 
-Designers think in pixels. Figma speaks pixels, every redline says 24px, every handoff tool measures in pixels. octet-scss keeps that unit end to end, so the number in the design file is the number in the code — no translation layer, no drift between what was drawn and what shipped. The math stays readable too: `gridx(4)` is 16px, not a decoded ratio.
+Designers think in pixels. Figma speaks pixels, every redline says 24px, every handoff tool measures in pixels. octet-scss keeps that unit end to end, so the number in the design file is the number in the code — no translation layer, no drift between what was drawn and what shipped. The math stays readable too: `gridx(4)` is 32px, not a decoded ratio.
 
 The grid is the other half. One 4px base, doubled to 8 for rhythm, drives spacing and type together — so vertical rhythm lines up across blocks instead of by accident. Consistent spacing, a readable measure, type that scales: the defaults you'd set up anyway, already set up.
 
@@ -14,7 +14,7 @@ The grid is the other half. One 4px base, doubled to 8 for rhythm, drives spacin
 
 ## Features
 
-- **8pt grid** — `$grid-base` (4px) and `gridx($n)`; spacing steps stay on the baseline
+- **8pt grid** — `$grid-base` (8px) and `gridx($n)` for on-grid vertical rhythm; spacing steps stay on the baseline
 - **Responsive, scalable type** — `fluid-font-size()`, a self-bounding `clamp()` with line-height snapped to the grid
 - **Responsive layout mixins** — `from()` / `until()`, `display-grid`, `max-width`, `scaled-spacing`
 - **Single-file spacing** — one breakpoint scale drives vertical rhythm, all in one place
@@ -54,7 +54,7 @@ Drop the core into your styles, override a token or two, done:
 }
 
 .card {
-  padding: gridx(4);              // 16px, on the grid
+  padding: gridx(4);              // 32px, on the grid
   border-radius: $radius-md;      // 4px
   background: var(--surface-card);
   @include elevation(2);
@@ -65,21 +65,20 @@ That's enough to build with. For a real site — app shell, nav, footer, your ow
 
 ## Token & mixin reference
 
-### SCSS tokens — `abstracts/_variables.scss`, `_config.scss`
+### SCSS tokens — `abstracts/_variables.scss`
 
 | Token | Value / notes |
 |---|---|
-| `$grid-base` | `4px` — the rhythm unit |
-| `$font-family-sans` / `$font-family-serif` | `omnes-pro` / `gelica` |
-| `$font-size-base` | `18px` |
+| `$grid-base` | `8px !default` — the rhythm unit; `gridx($n)` returns `$n × 8px` |
+| `$font-size-base` | `16px !default` |
+| `$font-family-sans` / `$font-family-serif` | system stacks (override to taste) |
 | `$radius-sm` / `-md` / `-lg` / `-xl` | `2` / `4` / `8` / `16px` |
-| `$breakpoints` | `360 540 720 900 1280 1366 1441px` — the one scale `from()`/`until()` draw from |
+| `$breakpoints` | `360 540 720 900 1280 1366 1441px` — see note below |
 | `$layout-readable-width` | `720px` (max-readability measure) |
-| `$layout-gutter` | `gridx(18)` — container horizontal offset |
 | `$duration-fast` / `-base` / `-slow` | `120` / `240` / `400ms` |
 | `$ease-standard` / `-out` / `-in` | `cubic-bezier(…)` easings |
 | `$z-base … $z-toast` | `0, 10, 100, 200, 300, 400, 500` — named stacking layers |
-| `$layout-max-width`, `$layout-sidebar-width`, `$layout-rail-collapse`, `$layout-single-col` | project config (`_config.scss`) |
+| `$layout-max-width` | `1640px !default` — content max width. (Rail width & reflow points are theme-owned — set in `starter-theme/_theme-layout.scss`.) |
 
 > Defined but not wired (kept for future use, not documented as functional):
 > `$layout-global-height`, `$font-family-narrow`, `$font-ratio-minor` / `-major`.
@@ -93,7 +92,7 @@ That's enough to build with. For a real site — app shell, nav, footer, your ow
 
 | Signature | Purpose |
 |---|---|
-| `gridx($value)` | `$value × $grid-base` → on-grid length |
+| `gridx($value)` | `$value × $grid-base` → on-grid height / vertical length (width is fluid `clamp()`, not `gridx`) |
 | `scaled-spacing($properties, $breaks: 4, $max: 32px, $step: 8)` | Stepped responsive spacing that grows to `$max` across the top breakpoints |
 | `fluid-gutter($property, $min: 24px, $max: 80px, $min-bp: 360px, $max-bp: 1920px)` | Fluid (clamp) horizontal spacing |
 | `fluid-font-size($min-size: 16px, $max-size: 24px, $min-bp: 360px, $max-bp: 1440px)` | Fluid font-size, line-height stepped to the grid |
@@ -115,6 +114,27 @@ Emitted as CSS by the core: a global `:focus-visible` ring, `.sr-only` /
 > `fb-responsive-grid`, with `!default` `$default-columns` / `$default-gap`).
 > **Currently unused** by the framework or starter-theme — included but not part
 > of the documented, exercised API.
+
+## Layout spacing
+
+One file owns the vertical rhythm — the spacing *between* blocks. I kept
+inheriting projects with margins and padding scattered across dozens of
+partials, no two sections spaced quite the same. Pulling every block-level
+margin into a single spacing file fixed that: the rhythm lives in one place,
+so it's consistent by construction and auditable at a glance. Spacing that's
+internal to a component (padding inside a card, say) still co-locates with its
+component — it's *layout* spacing that centralizes.
+
+And it's always `margin-bottom`, never `margin-top`. Every block pushes the
+next one down, so spacing flows in one direction — top to bottom, the way you
+read it. One direction means margins never fight or double up, and "how far
+apart are these two blocks?" always has a single answer, on the block above.
+The rare exception is an element that genuinely belongs *below* another (a
+caption under its image); everything else pushes down.
+
+Spacing steps on the 8pt grid through `scaled-spacing()` across `$breakpoints`,
+so vertical rhythm stays on the baseline as the viewport grows.
+`starter-theme/_theme-spacing.scss` is the worked example.
 
 ## Theming
 

@@ -1,5 +1,4 @@
 @use "../variables" as vars;
-@use "../config" as cfg;
 @use "../responsive-mixins" as mq;
 @use "spacing-mixins" as space;
 
@@ -62,7 +61,7 @@
   display: grid;
   grid-template-columns:
         [full-start] minmax(vars.gridx(6), 1fr)
-        [main-start] minmax(0, cfg.$layout-max-width)
+        [main-start] minmax(0, vars.$layout-max-width)
         [main-end] minmax(vars.gridx(6), 1fr) [full-end];
 
   > * {

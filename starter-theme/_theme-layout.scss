@@ -1,5 +1,10 @@
 @use "../abstracts" as *;
 
+// Generic layout dimensions — edit these in your own copy of the starter.
+// (Portfolio-specific values live in the consuming project, not the framework.)
+$rail-width:    280px;    // nav-rail column width
+$rail-collapse: 1280px;   // reflow to a single column below this (a $breakpoints value)
+
 // =============================================================================
 //  App shell — a fixed nav rail beside a scrolling main column.
 //  Starter layout; pair with the generic .nav and .footer.
@@ -13,7 +18,7 @@
 //  </div>
 // =============================================================================
 :root {
-  --rail-width: #{$layout-sidebar-width};
+  --rail-width: #{$rail-width};
 }
 
 html { container-type: inline-size; }
@@ -27,12 +32,12 @@ body { margin: 0; min-height: 100%; }   // min-height beats 100vh on mobile
   min-height: 100svh;
 
   // Two columns once there's room for the rail; single column below.
-  @include from($layout-rail-collapse) {
+  @include from($rail-collapse) {
     grid-template-columns: var(--rail-width) minmax(0, 1fr);
   }
 
   &__rail {
-    @include from($layout-rail-collapse) {
+    @include from($rail-collapse) {
       position: sticky;
       top: 0;
       align-self: start;
