@@ -1,10 +1,8 @@
 # octet-scss
 
-**An 8-point grid SCSS framework. Spacing, type, and layout all step on eight.**
+**What: This is an 8-point vertical grid SCSS framework. Spacing, type, and layout all step on 8-pts (by default, the rythmn can be changed — my portfolio, and Northern Tool actually ended up on a 4-pt grid).**
 
 I built this because I kept rebuilding it. Every project opened the same way — set the grid, size the type, wire the spacing, fix the reset — so I stopped starting over. octet-scss is the foundation I've carried site to site for years, tightened a little each time. Sharing it was always the plan. It just took me a while to clean it up enough to admit I wrote it.
-
-And yes, some of this documentation is AI slop. I'll get around to fixing it. Ran out of time today.
 
 ## Why: pixels, and a grid that holds
 
@@ -82,9 +80,6 @@ That's enough to build with. For a real site — app shell, nav, footer, your ow
 | `$z-base … $z-toast` | `0, 10, 100, 200, 300, 400, 500` — named stacking layers |
 | `$layout-max-width` | `1640px !default` — content max width. (Rail width & reflow points are theme-owned — set in `starter-theme/_theme-layout.scss`.) |
 
-> Defined but not wired (kept for future use, not documented as functional):
-> `$layout-global-height`, `$font-family-narrow`, `$font-ratio-minor` / `-major`.
-
 ### Color tokens (`:root` custom properties) — `abstracts/_colors.scss`
 
 - **Primitives** (numeric ramps): `--neutral-*`, `--primary-*`, `--secondary-*`, `--tertiary-*`
@@ -97,7 +92,7 @@ That's enough to build with. For a real site — app shell, nav, footer, your ow
 | `gridx($value)` | `$value × $grid-base` → on-grid height / vertical length (width is fluid `clamp()`, not `gridx`) |
 | `scaled-spacing($properties, $breaks: 4, $max: 32px, $step: 8)` | Stepped responsive spacing that grows to `$max` across the top breakpoints |
 | `fluid-gutter($property, $min: 24px, $max: 80px, $min-bp: 360px, $max-bp: 1920px)` | Fluid (clamp) horizontal spacing |
-| `fluid-font-size($min-size: 16px, $max-size: 24px, $min-bp: 360px, $max-bp: 1440px)` | Fluid font-size, line-height stepped to the grid |
+| `fluid-font-size($min-size: 16px, $max-size: 24px, $min-bp: 360px, $max-bp: 1440px)` | Fluid font-size for **headline / display type**; `clamp()` scaling, line-height stepped to the grid. Body copy (p, li, ol) stays fixed with a single step down — not fluid. |
 | `from($device)` / `until($device)` | `min-width` / `max-width` media queries (exact complements) |
 | `hover-only` / `touch-only` | `(hover: hover) and (pointer: fine)` / `(hover: none)` |
 | `display-grid` | `display: grid` + a scaled gap |

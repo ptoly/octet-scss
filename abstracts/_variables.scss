@@ -20,11 +20,8 @@ $grid-base: 8px !default;
 
 // ---- Typography --------------------------------------------------------------
 $font-family-sans:   omnes-pro, sans-serif;
-$font-family-narrow: omnes-narrow, sans-serif;   // reserved for narrow display
 $font-family-serif:  gelica, sans-serif;
 $font-size-base:     16px !default;
-$font-ratio-minor:   1.067;   // modular ratio — small screens
-$font-ratio-major:   1.333;   // modular ratio — large screens
 
 // ---- Radius ------------------------------------------------------------------
 $radius-sm: 2px;   // subtle — inputs, chips
@@ -42,7 +39,6 @@ $breakpoints: 360px, 540px, 720px, 900px, 1280px, 1366px, 1441px;
 // ---- Layout ------------------------------------------------------------------
 $layout-max-width:      1640px !default; // overall content max width (overridable)
 $layout-readable-width: 720px;       // max-readability text measure (identity)
-$layout-global-height:  gridx(16);   // vertical-rhythm anchor (reserved)
 
 // ---- Motion ------------------------------------------------------------------
 //  Durations

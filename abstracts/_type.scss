@@ -3,7 +3,7 @@
 @use "variables" as vars;
 @use "functions" as fn;
 
-// Modular fluid font sizing on an 8px vertical grid.
+//   Fluid font sizing on an 8px or 4px vertical grid.
 //   font-size scales fluidly (clamp); line-height steps at each breakpoint so
 //   it stays on the baseline grid.
 @mixin fluid-font-size(
