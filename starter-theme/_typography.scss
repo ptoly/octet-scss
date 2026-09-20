@@ -1,11 +1,14 @@
 @use "../abstracts" as *;
 @use "icons" as *;
-@use "sass:math";
 
 // =============================================================================
 //  Typography — base text styles + a decoupled heading level/size system.
-//  Body copy is capped at the max-readability measure; headings use
-//  fluid-font-size() so line-height snaps to the 8pt grid.
+//  Two type treatments, on purpose:
+//    • Body / copy (p, li, ol …): fixed size, capped at the readable measure,
+//      with a single step down at narrow widths. Reading text wants a steady
+//      measure, not continuous scaling.
+//    • Headline / display (h1–h6, .size-*, hero): fluid-font-size() — a
+//      clamp() that scales with the viewport, line-height snapped to the grid.
 // =============================================================================
 
 // Framework token (moved from abstracts/_variables.scss): body line-height [30px @ 18px].
@@ -22,13 +25,17 @@ p:not(:last-child), blockquote, .rtf p, .bullet-list {
   @include scaled-spacing(margin-bottom, 3, 32px);
 }
 
+// Body / copy type — p, li, ol, etc. Fixed size with ONE step down at narrow
+// widths, on purpose: reading text wants a steady, comfortable measure, not
+// continuous scaling. fluid-font-size() is for headline/display type only
+// (see the heading scale below); copy gets this "p treatment" instead.
 p {
   font-weight: 500;
   max-width: $layout-readable-width;
   line-height: 32px;
   font-size: 18px;
 
-  @include until(720px) {   // drop to a single readable column on narrow screens
+  @include until($layout-readable-width) {   // below the readable measure → single column
     font-size: 16px;
     line-height: 24px;
   }
