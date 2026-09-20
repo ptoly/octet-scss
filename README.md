@@ -10,12 +10,13 @@ Designers think in pixels. Figma speaks pixels, every redline says 24px, every h
 
 The grid is the other half. One 8px base, (halved to 4 is you want more refinement), drives spacing and type together — so vertical rhythm lines up across blocks instead of by accident. Consistent spacing, a readable measure, type that scales: the defaults you'd set up anyway, already set up.
 
-*One tradeoff, stated plainly: px honors browser zoom — which satisfies WCAG 1.4.4, Resize Text — but not a user's default font-size preference. If honoring that preference matters for your project, override the type tokens in rem.*
+*One tradeoff, handled: px honors browser zoom — which satisfies WCAG 1.4.4, Resize Text — but not a user's default font-size preference. So body copy is the deliberate exception: reading text (p, lists, captions) is sized with `rem()` — still authored in px — so it honors that preference too. UI chrome and display type stay in px.*
 
 ## Features
 
 - **8pt grid** — `$grid-base` (8px) and `gridx($n)` for on-grid vertical rhythm; spacing steps stay on the baseline
 - **Responsive, scalable type** — `fluid-font-size()`, a self-bounding `clamp()` with line-height snapped to the grid
+- **Reader-scalable body copy** — p, lists and captions use `rem()` (px-authored) so reading text honors the browser's font-size setting (WCAG 1.4.4)
 - **Responsive layout mixins** — `from()` / `until()`, `display-grid`, `max-width`, `scaled-spacing`
 - **Single-file spacing** — one breakpoint scale drives vertical rhythm, all in one place, for more consistency (see more below)
 - **Accessibility-ready (WCAG AA)** — focus-visible ring, `.sr-only`, skip link, reduced-motion reset, on by default
@@ -70,7 +71,7 @@ That's enough to build with. For a real site — app shell, nav, footer, your ow
 | Token | Value / notes |
 |---|---|
 | `$grid-base` | `8px !default` — the rhythm unit; `gridx($n)` returns `$n × 8px` |
-| `$font-size-base` | `16px !default` |
+| `$rem-base` | `16px !default` — the document root font-size `rem()` divides by (leave at the browser default unless you set `html { font-size }`) |
 | `$font-family-sans` / `$font-family-serif` | system stacks (override to taste) |
 | `$radius-sm` / `-md` / `-lg` / `-xl` | `2` / `4` / `8` / `16px` |
 | `$breakpoints` | `360 540 720 900 1280 1366 1441px` — see note below |
@@ -90,6 +91,7 @@ That's enough to build with. For a real site — app shell, nav, footer, your ow
 | Signature | Purpose |
 |---|---|
 | `gridx($value)` | `$value × $grid-base` → on-grid height / vertical length (width is fluid `clamp()`, not `gridx`) |
+| `rem($px)` | px → rem against `$rem-base`; e.g. `rem(18px)` → `1.125rem`. For body copy that should honor the reader's font-size — not UI chrome |
 | `scaled-spacing($properties, $breaks: 4, $max: 32px, $step: 8)` | Stepped responsive spacing that grows to `$max` across the top breakpoints |
 | `fluid-gutter($property, $min: 24px, $max: 80px, $min-bp: 360px, $max-bp: 1920px)` | Fluid (clamp) horizontal spacing |
 | `fluid-font-size($min-size: 16px, $max-size: 24px, $min-bp: 360px, $max-bp: 1440px)` | Fluid font-size for **headline / display type**; `clamp()` scaling, line-height stepped to the grid. Body copy (p, li, ol) stays fixed with a single step down — not fluid. |
@@ -151,9 +153,17 @@ routinely re-base them:
 
 ```scss
 @use "octet-scss/abstracts" as * with (
-  $grid-base: 4px,       // default 8px — the 8pt rhythm unit
-  $font-size-base: 18px  // default 16px
+  $grid-base: 4px,   // default 8px — the 8pt rhythm unit
+  $rem-base: 18px    // default 16px — the root size rem() divides by
 );
+```
+
+If you re-base `$rem-base`, also set the matching document root so the two agree
+— and set it as a **percentage** (not a hard px) so body copy still honors the
+reader's font-size preference:
+
+```scss
+html { font-size: 112.5%; }   // 18px at the 16px browser default; scales with the reader
 ```
 
 (The flexbox grid's `$default-columns` / `$default-gap` are `!default` too.)

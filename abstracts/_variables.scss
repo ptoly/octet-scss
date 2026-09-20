@@ -5,6 +5,7 @@
 //  motion. All SCSS: these feed media queries and Sass math, so they can't be
 //  runtime custom properties. Project-specific dimensions live in _config.scss.
 // =============================================================================
+@use "sass:math";
 
 // ---- Grid --------------------------------------------------------------------
 //  $grid-base is the vertical-rhythm unit (8px here; drop to 4px for a finer
@@ -21,7 +22,20 @@ $grid-base: 8px !default;
 // ---- Typography --------------------------------------------------------------
 $font-family-sans:   omnes-pro, sans-serif;
 $font-family-serif:  gelica, sans-serif;
-$font-size-base:     16px !default;
+
+// ---- rem (the one px exception) ---------------------------------------------
+//  The framework authors in px everywhere — except body text. Reading copy
+//  (p, li, ol, captions) uses rem() so it honors the reader's browser
+//  font-size preference (WCAG 1.4.4). You still author in px; rem() divides by
+//  the true document root ($rem-base, the browser default) and emits rem:
+//  rem(18px) → 1.125rem. UI chrome (nav, buttons, labels) stays in px.
+//  $rem-base is the ROOT font-size, not the design base — leave it at the
+//  browser default unless you also set `html { font-size }`.
+$rem-base: 16px !default;
+
+@function rem($px) {
+  @return math.div($px, $rem-base) * 1rem;
+}
 
 // ---- Radius ------------------------------------------------------------------
 $radius-sm: 2px;   // subtle — inputs, chips

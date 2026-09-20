@@ -4,10 +4,11 @@
 // =============================================================================
 //  Typography — base text styles + a decoupled heading level/size system.
 //  Two type treatments, on purpose:
-//    • Body / copy (p, li, ol …): fixed size, capped at the readable measure,
-//      with a single step down at narrow widths. Reading text wants a steady
-//      measure, not continuous scaling.
-//    • Headline / display (h1–h6, .size-*, hero): fluid-font-size() — a
+//    • Body / copy (p, li, ol …): sized in rem() (px-authored), capped at the
+//      readable measure, with a single step down at narrow widths. rem lets
+//      reading text honor the reader's browser font-size (WCAG 1.4.4) — the one
+//      place the framework departs from px.
+//    • Headline / display (h1–h6, .size-*, hero): fluid-font-size() — a px
 //      clamp() that scales with the viewport, line-height snapped to the grid.
 // =============================================================================
 
@@ -25,19 +26,20 @@ p:not(:last-child), blockquote, .rtf p, .bullet-list {
   @include scaled-spacing(margin-bottom, 3, 32px);
 }
 
-// Body / copy type — p, li, ol, etc. Fixed size with ONE step down at narrow
-// widths, on purpose: reading text wants a steady, comfortable measure, not
-// continuous scaling. fluid-font-size() is for headline/display type only
-// (see the heading scale below); copy gets this "p treatment" instead.
+// Body / copy type — p, li, ol, etc. Authored in px but emitted as rem via
+// rem(), so reading text honors the reader's browser font-size (WCAG 1.4.4)
+// while the rest of the framework stays in px. One step down at narrow widths;
+// fluid-font-size() is for headline/display type only (see the heading scale
+// below). Identical rendering at the default 16px root.
 p {
   font-weight: 500;
   max-width: $layout-readable-width;
-  line-height: 32px;
-  font-size: 18px;
+  line-height: rem(32px);
+  font-size: rem(18px);
 
   @include until($layout-readable-width) {   // below the readable measure → single column
-    font-size: 16px;
-    line-height: 24px;
+    font-size: rem(16px);
+    line-height: rem(24px);
   }
 }
 
@@ -148,10 +150,16 @@ h6, .size-h6, .smallest-heading {
 }
 
 // ---- Quotes, captions & misc ------------------------------------------------
+// Pull-quote is reading text → rem (honors reader font-size), like body copy.
+// A single step down at narrow widths, not the px fluid clamp used for display.
 blockquote {
   font-family: $font-family-serif;
+  font-size: rem(24px);
+  line-height: 1.5;
 
-  @include fluid-font-size(16px, 24px, 360px, 1440px);
+  @include until($layout-readable-width) {
+    font-size: rem(20px);
+  }
 
   font-style: italic;
   position: relative;
@@ -165,7 +173,7 @@ blockquote {
 
 figcaption {
     font-family: $font-family-serif;
-    font-size: 16px;
+    font-size: rem(16px);
     margin-top: 8px;
     color: var(--text-muted);
     max-width: $layout-readable-width;
