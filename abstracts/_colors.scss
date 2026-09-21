@@ -51,17 +51,18 @@
   --tertiary-800: #8c5312;
   --tertiary-900: #6e4708;
 
-  // ---- Neutral — surfaces, text, lines -------------------------------------
-  --neutral-900: #0a0a0a;
-  --neutral-850: #101010;
-  --neutral-800: #161616;
-  --neutral-750: #1c1c1c;
-  --neutral-700: #242424;
-  --neutral-600: #2e2e2e;
-  --neutral-500: #4a4a4a;
-  --neutral-300: #8f8d88;
-  --neutral-200: #bfbeb9;
+  // ---- Neutral — surfaces, text, lines (9 tones, 100 lightest → 900 darkest) -
+  //  Warm neutral, weighted toward the dark end so a dark UI has enough distinct
+  //  surface steps (900–600 = the depth ladder; 100–300 = text; 400/500 = lines).
   --neutral-100: #e8e5e2;
+  --neutral-200: #bfbeb9;
+  --neutral-300: #8f8d88;
+  --neutral-400: #5d5c58;
+  --neutral-500: #3e3d3a;
+  --neutral-600: #2b2a28;
+  --neutral-700: #1f1e1c;
+  --neutral-800: #151513;
+  --neutral-900: #0b0b0a;
 
   // ===========================================================================
   //  2 · Semantic
@@ -83,10 +84,10 @@
   --focus-ring: var(--primary-400);
 
   // ---- Surfaces — depth ladder ---------------------------------------------
-  --surface-page:     var(--neutral-850);
+  --surface-page:     var(--neutral-900);
   --surface-raised:   var(--neutral-800);
-  --surface-card:     var(--neutral-750);
-  --surface-elevated: var(--neutral-700);
+  --surface-card:     var(--neutral-700);
+  --surface-elevated: var(--neutral-600);
 
   // ---- Text ----------------------------------------------------------------
   --text-primary:   var(--neutral-100);
@@ -96,8 +97,8 @@
 
   // ---- Borders -------------------------------------------------------------
   --border-subtle:  rgb(255 255 255 / 0.06);
-  --border-default: var(--neutral-600);
-  --border-strong:  var(--neutral-500);
+  --border-default: var(--neutral-500);   // sits above the 900–600 surface ladder, so it stays visible
+  --border-strong:  var(--neutral-400);
 
   // ---- Signal --------------------------------------------------------------
   --danger: #ff4d4f;   // extend with --success / --warning as needed
