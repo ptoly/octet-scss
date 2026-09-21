@@ -64,6 +64,10 @@ Because your `brand` loads **after** the framework's `:root`, your values win.
   them from `main.scss`. Use the framework mixins (`scaled-spacing`,
   `fluid-font-size`, `from()`/`until()`, `elevation`, `transition`) and tokens
   (`var(--brand)`, `$radius-md`, `gridx()`, `$breakpoints`).
+- **Name classes with BEM** — block · `block__element` · `block--modifier`,
+  state on attributes, IDs for hooks not styling. See
+  [Naming conventions](../README.md#naming-conventions) in the core README; the
+  shipped chrome here (`.nav`, `.footer`, `.app-shell`) are worked examples.
 - **Accessibility primitives ship in the core** — focus rings, `.sr-only`,
   skip links, and reduced-motion are on by default. Wiring them into real,
   conformant pages (semantic markup, contrast, focus order) is your part.
