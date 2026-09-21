@@ -9,7 +9,8 @@
 //      reading text honor the reader's browser font-size (WCAG 1.4.4) — the one
 //      place the framework departs from px.
 //    • Headline / display (h1–h6, .size-*, hero): fluid-font-size() — a px
-//      clamp() that scales with the viewport, line-height snapped to the grid.
+//      clamp() that scales with the viewport; line-height rounds to $grid-base
+//      (tight for display h1–h4 + hero, text-like for h5–h6), on-grid always.
 // =============================================================================
 
 // Framework token (moved from abstracts/_variables.scss): body line-height [30px @ 18px].
@@ -39,6 +40,10 @@ p {
 
   @include until($layout-readable-width) {   // below the readable measure → single column
     font-size: rem(16px);
+    line-height: rem(24px);
+  }
+
+  small {
     line-height: rem(24px);
   }
 }
@@ -74,19 +79,19 @@ address {
 //    - A sub-label that must look small but sits high in the
 //      outline: add a SMALLER .size-hN. Level stays correct.
 //
-//  All sizes are px min/max fed to fluid-font-size(); line-height
-//  auto-snaps to the 8px grid inside the mixin, so any 4px-friendly
-//  pair stays on rhythm.
+//  All sizes are px min/max fed to fluid-font-size(), with a line-height ratio:
+//  ~1.1 for display (h1–h4 + hero) → minimized but healthy leading; ~1.5 for
+//  h5–h6 (body-like, for readability). The mixin rounds line-height UP to
+//  $grid-base via CSS round(), so it stays on the grid as the font scales.
 // =============================================================
 
-// Shared line-height behavior
+// Line-height is set per level by fluid-font-size() below — round(up) to
+// $grid-base, so it stays on the grid at every width. Display (h1–h4, hero) uses
+// ratio ~1.1 (minimized but healthy leading — lands ~1.1–1.2 on the 4px grid);
+// h5–h6 use ~1.5 (body-like leading, for readability). Wrapping headings opt in:
 h1, h2, h3, h4, h5, h6,
-.size-h1, .size-h2, .size-h3, .size-h4, .size-h5, .size-h6 {
-  line-height: 1;
-
-  &.wrappable {
-    line-height: 1.1667;
-  }
+.size-h1, .size-h2, .size-h3, .size-h4, .size-h5, .size-h6, .size-hero {
+  &.wrappable { line-height: 1.1667; }
 }
 
 // Structural spacing — h1 get generous bottom margin,
@@ -115,27 +120,27 @@ h2, h3, h4, h5, h6 {
 h1, .size-h1 {
   font-weight: 600;
 
-  @include fluid-font-size(28px, 44px, 360px, 1440px);
+  @include fluid-font-size(28px, 44px, 360px, 1440px, 1.1);   // display: minimized leading, on-grid
 }
 
 h2, .size-h2 {
-  @include fluid-font-size(24px, 32px, 360px, 1440px);
+  @include fluid-font-size(24px, 32px, 360px, 1440px, 1.1);
 }
 
 h3, .size-h3 {
-  @include fluid-font-size(20px, 26px, 360px, 1440px);
+  @include fluid-font-size(20px, 24px, 360px, 1440px, 1.1);
 }
 
 h4, .size-h4 {
-  @include fluid-font-size(18px, 22px, 360px, 1440px);
+  @include fluid-font-size(18px, 22px, 360px, 1440px, 1.1);
 }
 
 h5, .size-h5 {
-  @include fluid-font-size(16px, 20px, 360px, 1440px);
+  @include fluid-font-size(16px, 20px, 360px, 1440px, 1.5);   // body-like leading (readability)
 }
 
 h6, .size-h6, .smallest-heading {
-  @include fluid-font-size(14px, 18px, 360px, 1440px);
+  @include fluid-font-size(14px, 18px, 360px, 1440px, 1.5);   // body-like leading (readability)
 }
 
 // -------------------------------------------------------------
@@ -146,7 +151,7 @@ h6, .size-h6, .smallest-heading {
 .size-hero {
   font-weight: 600;
 
-  @include fluid-font-size(36px, 64px, 360px, 1440px);
+  @include fluid-font-size(36px, 64px, 360px, 1440px, 1.1);   // display: minimized leading, on-grid
 }
 
 // ---- Quotes, captions & misc ------------------------------------------------

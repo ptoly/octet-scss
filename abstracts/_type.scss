@@ -1,49 +1,38 @@
 @use "sass:math";
-@use "sass:list" as list;
 @use "variables" as vars;
-@use "functions" as fn;
 
-//   Fluid font sizing on an 8px or 4px vertical grid.
-//   font-size scales fluidly (clamp); line-height steps at each breakpoint so
-//   it stays on the baseline grid.
+//   Fluid font sizing on the vertical grid ($grid-base — 8px or 4px).
+//   ---------------------------------------------------------------------------
+//   font-size scales fluidly with clamp(); line-height is kept on the baseline
+//   grid with CSS round(): it snaps (font-size × $line-height) to $grid-base at
+//   EVERY width, so leading tracks the font continuously instead of stepping at
+//   breakpoints. A unitless fallback covers browsers without round().
+//
+//   Line-height is OPT-IN and stays ON the grid: pass $line-height as a target
+//   ratio and the mixin sets line-height to (font-size × ratio) rounded UP to
+//   $grid-base via CSS round(). Rounding up snaps to the grid at every width and
+//   never falls below the font (no clipping). A low ratio (~1.1) gives tight
+//   display leading; body-readable text wants ~1.5 or more.
+//   Omit $line-height to set font-size only (the theme controls line-height).
 @mixin fluid-font-size(
   $min-size: 16px,
   $max-size: 24px,
   $min-bp: 360px,
-  $max-bp: 1440px
+  $max-bp: 1440px,
+  $line-height: null
 ) {
-  $line-height: $min-size;
   $slope: math.div($max-size - $min-size, $max-bp - $min-bp);
-  $base: $max-size - ($slope * $max-bp);
+  $intercept: $max-size - ($slope * $max-bp);
+  $fluid: clamp(#{$min-size}, #{$intercept} + #{$slope * 100}vw, #{$max-size});
 
-  // fluid font-size, self-bounding — no media query needed
-  font-size: clamp(
-          #{$min-size},
-          #{$base} + #{$slope * 100}vw,
-          #{$max-size}
-  );
-  line-height: $min-size;
+  // Fluid font-size, self-bounding — no media query needed.
+  font-size: $fluid;
 
-  // Step line-height up on the grid across the breakpoint scale
-  @each $bp in vars.$breakpoints {
-    $this-line-height: $line-height;
-    $index: list.index(vars.$breakpoints, $bp);
-
-    @if $index <= 6 {
-      $max-bp: list.nth(vars.$breakpoints, $index + 1) - 1;
-      $max-font-size: $base + ($max-bp * $slope);
-
-      @if $max-font-size > $line-height {
-        $line-height: fn.roundto($max-font-size + 8, 8);
-
-        @media all and (min-width: $bp) {
-          line-height: $line-height;
-        }
-      }
-    }
-  }
-
-  @media all and (min-width: $max-bp) {
-    line-height: $max-size + 8;
+  @if $line-height != null {
+    // Fallback: unitless ratio (scales with the font, just not grid-snapped).
+    line-height: $line-height;
+    // round(up) keeps line-height on $grid-base as the font scales — on-grid at
+    // every width, always ≥ the font, no breakpoint steps.
+    line-height: round(up, #{$fluid} * #{$line-height}, vars.$grid-base);
   }
 }

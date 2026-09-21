@@ -15,7 +15,7 @@ The grid is the other half. One 8px base, (halved to 4 is you want more refineme
 ## Features
 
 - **8pt grid** — `$grid-base` (8px) and `gridx($n)` for on-grid vertical rhythm; spacing steps stay on the baseline
-- **Responsive, scalable type** — `fluid-font-size()`, a self-bounding `clamp()` with line-height snapped to the grid
+- **Responsive, scalable type** — `fluid-font-size()`, a self-bounding `clamp()`, with optional grid-snapped line-height via CSS `round()`
 - **Reader-scalable body copy** — p, lists and captions use `rem()` (px-authored) so reading text honors the browser's font-size setting (WCAG 1.4.4)
 - **Responsive layout mixins** — `from()` / `until()`, `display-grid`, `max-width`, `scaled-spacing`
 - **Single-file spacing** — one breakpoint scale drives vertical rhythm, all in one place, for more consistency (see more below)
@@ -94,7 +94,7 @@ That's enough to build with. For a real site — app shell, nav, footer, your ow
 | `rem($px)` | px → rem against `$rem-base`; e.g. `rem(18px)` → `1.125rem`. For body copy that should honor the reader's font-size — not UI chrome |
 | `scaled-spacing($properties, $breaks: 4, $max: 32px, $step: 8)` | Stepped responsive spacing that grows to `$max` across the top breakpoints |
 | `fluid-gutter($property, $min: 24px, $max: 80px, $min-bp: 360px, $max-bp: 1920px)` | Fluid (clamp) horizontal spacing |
-| `fluid-font-size($min-size: 16px, $max-size: 24px, $min-bp: 360px, $max-bp: 1440px)` | Fluid font-size for **headline / display type**; `clamp()` scaling, line-height stepped to the grid. Body copy (p, li, ol) stays fixed with a single step down — not fluid. |
+| `fluid-font-size($min-size: 16px, $max-size: 24px, $min-bp: 360px, $max-bp: 1440px, $line-height: null)` | Fluid `clamp()` font-size for **headline / display type**. Sets font-size only by default (leave line-height to the theme — e.g. `1` for tight display). Pass `$line-height` as a ratio to also keep line-height on `$grid-base` at every width via CSS `round()` (with a unitless fallback). Body copy (p, li, ol) stays fixed rem — not fluid. |
 | `from($device)` / `until($device)` | `min-width` / `max-width` media queries (exact complements) |
 | `hover-only` / `touch-only` | `(hover: hover) and (pointer: fine)` / `(hover: none)` |
 | `display-grid` | `display: grid` + a scaled gap |
@@ -172,6 +172,45 @@ A generic example theme ships in **`starter-theme/`** (renamed from `themes/`) �
 including `_theme-colors.scss`, an opt-in "olive" re-brand you can copy to
 `_brand.scss` and edit. `starter-theme/README.md` documents the
 copy-and-customize workflow.
+
+## Naming conventions
+
+Class names follow **BEM** — Block, Element, Modifier — so a selector tells you
+what a thing is and where it lives:
+
+```html
+<article class="card">            <!-- block: a standalone component -->
+  <h3 class="card__title">…</h3>  <!-- element: a part of the block -->
+  <p  class="card__body">…</p>
+</article>
+<a class="btn btn--primary">…</a> <!-- block + modifier: a variant -->
+```
+
+- **Block** — a standalone component: `.card`, `.nav`, `.hero`. Multi-word
+  blocks use a single hyphen (`.card-grid`).
+- **`block__element`** — a part that only means something inside its block:
+  `.nav__link`, `.hero__actions`, `.page__body`. Two underscores. Elements don't
+  nest in the name — it's `.card__title`, never `.card__header__title`.
+- **`block--modifier`** — a variant of a block (or element): `.btn--primary`,
+  `.btn--ghost`. Two dashes. A modifier is *added alongside* the base class
+  (`class="btn btn--primary"`), never on its own.
+
+Three rules keep it honest:
+
+1. **State lives on attributes, not classes, when a semantic one exists.** Drive
+   styling off `[aria-current]`, `[aria-expanded]`, `[aria-disabled]`,
+   `[data-open]` — one source of truth, no class/ARIA drift. Reserve an
+   `.is-*` class (e.g. `.is-locked`) for purely visual state with no attribute.
+2. **IDs are for anchors and JS/ARIA hooks, never for styling.** An id is nearly
+   impossible to override later; style with a class and keep the id for
+   `href="#…"`, `aria-controls`, and `getElementById`.
+3. **Utilities are a separate layer**, not BEM: single-purpose, hyphenated,
+   context-free — `.center`, `.no-wrap`, `.max-width`, `.readability-width`,
+   `.unstyled`. Reach for one on markup instead of a one-off rule; anything
+   larger is a component.
+
+Every shipped component (`.btn`, `.card`, `.hero`, `.page`, `.article`, `.nav`,
+`.footer`, `.cta`) already follows this — read one as a worked example.
 
 ## License
 
