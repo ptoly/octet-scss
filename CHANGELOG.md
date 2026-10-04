@@ -8,7 +8,7 @@ exact version if that matters to you.
 
 ## 0.3.0 — 2026-10-04
 
-Framework tidy-up ahead of a public release: dead code out, two silent bugs
+Framework tidy-up: dead code out, two silent bugs
 fixed, and the generic SVG helpers moved somewhere consumers can reach them.
 
 ### Breaking
