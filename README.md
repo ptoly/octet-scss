@@ -109,8 +109,6 @@ That's enough to build with. For a real site — app shell, nav, footer, your ow
 
 Emitted as CSS by the core: a global `:focus-visible` ring, `.sr-only` / `.visually-hidden` / `.sr-only-focusable` / `.skip-link`, and a `prefers-reduced-motion` reset.
 
-> Also present in `abstracts/layout/`: a flexbox grid (`grid`, `cell`, `fb-responsive-grid`, with `!default` `$default-columns` / `$default-gap`). **Currently unused** by the framework or starter-theme — included but not part of the documented, exercised API.
-
 ## Layout spacing
 
 One file owns the vertical rhythm — the spacing *between* blocks. I kept inheriting projects with margins and padding scattered across dozens of partials, no two sections spaced quite the same. Pulling every block-level margin into a single spacing file fixed that: the rhythm lives in one place, so it's consistent by construction and auditable at a glance. Spacing that's internal to a component (padding inside a card, say) still co-locates with its component — it's *layout* spacing that centralizes.
@@ -142,8 +140,6 @@ If you re-base `$rem-base`, also set the matching document root so the two agree
 ```scss
 html { font-size: 112.5%; }   // 18px at the 16px browser default; scales with the reader
 ```
-
-(The flexbox grid's `$default-columns` / `$default-gap` are `!default` too.)
 
 A generic example theme ships in **`starter-theme/`** (renamed from `themes/`) — including `_theme-colors.scss`, an opt-in "olive" re-brand you can copy to `_brand.scss` and edit. `starter-theme/README.md` documents the copy-and-customize workflow.
 
