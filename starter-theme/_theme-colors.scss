@@ -1,27 +1,34 @@
 // =============================================================================
-//  Example theme override — "olive" (octet's own palette)
+//  Example theme override — "ember" (illustrative only)
 //  ---------------------------------------------------------------------------
 //  NOT loaded by default — the framework ships the generic indigo/teal/amber
-//  defaults from abstracts/_colors.scss. This file shows how to re-brand:
-//  override whole ramps for a full re-skin, or a few semantic tokens for a
-//  light touch. To use it, @use it from themes/_index.scss (after abstracts).
+//  defaults from abstracts/_colors.scss. This file is the worked example of a
+//  re-brand, in a palette deliberately unlike the defaults so the effect is
+//  obvious. To use it, @use it from starter-theme/_index.scss (after abstracts).
+//
+//  Two ways to re-brand, both shown below:
+//    1. Swap a whole ramp — every semantic token pointing at it follows.
+//    2. Point individual semantic tokens at bespoke values, for a light touch.
+//
+//  Keep ramps in a single notation (hex here) so tones stay comparable.
 // =============================================================================
 
 :root {
-  // Full re-skin — swap the primary ramp
-  --primary-100: #f4f4dd;
-  --primary-200: #e6e6b4;
-  --primary-300: #cfcf78;
-  --primary-400: #9a9a28;
-  --primary-500: rgb(93 93 0);    // olive — brand base
-  --primary-600: #4f4f00;
-  --primary-700: #3f3f00;
-  --primary-800: #2c2c00;
-  --primary-900: #1a1a00;
+  // ---- 1 · Full re-skin — swap the primary ramp ------------------------------
+  //  --brand, --brand-hover, --brand-active, --link and --focus-ring all read
+  //  from this ramp, so overriding it alone re-brands the whole UI.
+  --primary-100: #ffece5;
+  --primary-200: #ffd2c2;
+  --primary-300: #ffae91;
+  --primary-400: #ff855c;
+  --primary-500: #f2572b;   // ember — brand base
+  --primary-600: #d13f18;
+  --primary-700: #a93012;
+  --primary-800: #7d240e;
+  --primary-900: #4f1708;
 
-  // Light-touch overrides — point semantic roles at bespoke values
-  --link:       #e8dda6;   // warm sand
-  --link-hover: #f0e05c;
-  --highlight:  #ffee10;   // bright yellow accent
-  --focus-ring: #f0e05c;
+  // ---- 2 · Light touch — retarget individual semantic roles ------------------
+  //  Nothing here needs a ramp; a semantic token can point anywhere.
+  --accent:    var(--secondary-400);   // keep the default teal, one step lighter
+  --highlight: var(--tertiary-300);
 }

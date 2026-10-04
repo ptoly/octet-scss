@@ -144,7 +144,7 @@ If you re-base `$rem-base`, also set the matching document root so the two agree
 html { font-size: 112.5%; }   // 18px at the 16px browser default; scales with the reader
 ```
 
-A generic example theme ships in **`starter-theme/`** (renamed from `themes/`) — including `_theme-colors.scss`, an opt-in "olive" re-brand you can copy to `_brand.scss` and edit. `starter-theme/README.md` documents the copy-and-customize workflow.
+A generic example theme ships in **`starter-theme/`** (renamed from `themes/`) — including `_theme-colors.scss`, an opt-in "ember" re-brand showing both ways to re-skin (swap a ramp, or retarget individual semantic tokens). Copy it to your own `_brand.scss` and edit. `starter-theme/README.md` documents the copy-and-customize workflow.
 
 ## Naming conventions
 
