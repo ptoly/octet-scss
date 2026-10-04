@@ -170,6 +170,11 @@ Three rules keep it honest:
 
 Every shipped component (`.btn`, `.card`, `.hero`, `.page`, `.article`, `.nav`, `.footer`, `.cta`) already follows this — read one as a worked example.
 
+## Changelog
+
+Release-by-release notes, including breaking changes and upgrade steps, are in
+[CHANGELOG.md](CHANGELOG.md).
+
 ## License
 
 MIT
