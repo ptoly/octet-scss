@@ -44,8 +44,8 @@ $radius-lg: 8px;   // cards (2x grid)
 $radius-xl: 16px;  // large surfaces (4x grid)
 
 // ---- Breakpoints — the one responsive scale ---------------------------------
-//  Single source of truth: drives vertical rhythm (scaled-spacing, modular-
-//  spacing, fluid-font-size) AND is the menu that from()/until() pick from, so
+//  Single source of truth: drives vertical rhythm (scaled-spacing,
+//  fluid-font-size) AND is the menu that from()/until() pick from, so
 //  structural reflows land on rhythm lines. SCSS — media queries can't read
 //  var(). Project reflow points live in _config.scss.
 $breakpoints: 360px, 540px, 720px, 900px, 1280px, 1366px, 1441px;
