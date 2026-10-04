@@ -46,7 +46,7 @@ Because your `brand` loads **after** the framework's `:root`, your values win.
 | `_typography.scss`            | Body text + a decoupled heading level/size system            |
 | `_theme-spacing.scss`         | Vertical rhythm between blocks (the one spacing file)        |
 | `_class-utilities.scss`       | `.no-wrap`, `.center`, `.max-width`, `.readability-width`, `.unstyled` |
-| `_links.scss` / `_icons.scss` | Theme mixins — `link-styling`, `link-arrow-right`, inline-SVG helpers |
+| `_icons.scss`                 | The theme's own icon + treatment (`link-arrow-right`). The generic inline-SVG helpers live in `abstracts/_icons.scss` |
 | `_theme-colors.scss`          | An example re-brand (olive). Copy → `_brand.scss` and edit.  |
 | `_index.scss`                 | Loads the chrome.                                            |
 

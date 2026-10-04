@@ -1,0 +1,70 @@
+@use "sass:string";
+
+// =============================================================================
+//  Inline-SVG helpers — generic, emit nothing on their own.
+//  ---------------------------------------------------------------------------
+//  These turn an SVG string into a usable background-image: url-encode it,
+//  wrap it as a data: URI, and inject size/colour into a templated icon.
+//  They live in abstracts (not the theme) because every consumer needs them
+//  and nothing here is theme-specific — a theme supplies the icon itself.
+// =============================================================================
+
+// Replace every occurrence of $search in $string with $replace.
+@function str-replace($string, $search, $replace: '') {
+  $index: string.index($string, $search);
+
+  @if $index {
+    @return string.slice($string, 1, $index - 1) + $replace + str-replace(string.slice($string, $index + string.length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+// URL-encode a raw SVG string so it can live in a data: URI.
+@function url-encode($string) {
+  $map: (
+          "%": "%25",
+          "<": "%3C",
+          ">": "%3E",
+          " ": "%20",
+          "!": "%21",
+          "*": "%2A",
+          "'": "%27",
+          '"': "%22",
+          "(": "%28",
+          ")": "%29",
+          ";": "%3B",
+          ":": "%3A",
+          "@": "%40",
+          "&": "%26",
+          "=": "%3D",
+          "+": "%2B",
+          "$": "%24",
+          ",": "%2C",
+          "/": "%2F",
+          "?": "%3F",
+          "#": "%23",
+          "[": "%5B",
+          "]": "%5D"
+  );
+  $new: $string;
+
+  @each $search, $replace in $map {
+    $new: str-replace($new, $search, $replace);
+  }
+
+  @return $new;
+}
+
+// Wrap an SVG string as an inline background-image data URI.
+@function inline-svg($string) {
+  @return url('data:image/svg+xml;charset=utf-8,#{url-encode($string)}');
+}
+
+// Inject size/colour into a templated SVG (placeholders `icon-width`/`icon-color`).
+@function prepare-icon($icon, $color, $dimension) {
+  $icon-set-dimension: str-replace($icon, "icon-width", $dimension);
+  $icon-set-color: str-replace($icon-set-dimension, "icon-color", $color);
+
+  @return $icon-set-color;
+}

@@ -106,6 +106,9 @@ That's enough to build with. For a real site — app shell, nav, footer, your ow
 | `focus-visible($color: var(--focus-ring), $width: 2px, $offset: 2px)` | Custom focus ring                                            |
 | `sr-only` / `sr-only-focusable` / `skip-link`                | Screen-reader / skip-link utilities                          |
 | `roundto($value, $nearest)`                                  | Round up to the nearest multiple                             |
+| `inline-svg($string)`                                        | Wrap an SVG string as a `url('data:image/svg+xml,…')` background-image |
+| `prepare-icon($icon, $color, $dimension)`                    | Inject size/colour into a templated SVG (`icon-width` / `icon-color` placeholders) |
+| `url-encode($string)` / `str-replace($string, $search, $replace: '')` | The encoding primitives `inline-svg` is built on — public because custom icon work needs them |
 
 Emitted as CSS by the core: a global `:focus-visible` ring, `.sr-only` / `.visually-hidden` / `.sr-only-focusable` / `.skip-link`, and a `prefers-reduced-motion` reset.
 
