@@ -2,6 +2,18 @@
 @use "sass:list" as list;
 @use "../variables" as vars;
 
+// Properties where a negative length is invalid CSS: the browser drops the
+// whole declaration, so a ramp that starts negative fails *silently*. Spacing
+// that legitimately goes negative — margins, offsets — is deliberately absent
+// from this list and passes through unchecked.
+$_negative-invalid:
+        gap row-gap column-gap
+        padding padding-top padding-right padding-bottom padding-left
+        padding-block padding-block-start padding-block-end
+        padding-inline padding-inline-start padding-inline-end
+        width min-width max-width height min-height max-height
+        border-radius border-width outline-width font-size flex-basis;
+
 // -----------------------------------------------------------------------------
 //  scaled-spacing — core stepped responsive spacing
 //  ---------------------------------------------------------------------------
@@ -26,6 +38,18 @@
 
   $value: $max - (($breaks - 1) * $step);
   $start: ($count - $breaks) + 1;
+
+  // The base value is $max minus one $step per participating breakpoint, so a
+  // large $breaks can push it below zero. On a property that forbids negative
+  // lengths that emits invalid CSS which browsers discard without complaint —
+  // the ramp looks fine and silently does nothing at the low end.
+  @if $value < 0 {
+    @each $property in $properties {
+      @if list.index($_negative-invalid, $property) {
+        @error "scaled-spacing: this ramp starts at #{$value} ($max #{$max} over #{$breaks} breaks of #{$step}). A negative #{$property} is invalid CSS and is dropped silently — lower $breaks or raise $max.";
+      }
+    }
+  }
 
   @for $i from $start through $count {
     @if $i == $start {
