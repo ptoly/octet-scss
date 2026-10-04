@@ -42,7 +42,11 @@
   .cg-cols-#{$i},
   %cg-cols-#{$i},
   .cols-#{$i} {
-    @include space.scaled-spacing(gap, 7, 32px);
+    // $breaks must stay <= 5 here: $max - (($breaks - 1) * $step) is the base
+    // value, so 7 breaks put it at -16px and emitted two invalid negative gaps
+    // (browsers dropped them, which is why it looked fine). 5 matches
+    // display-grid above and reaches the same 32px at the widest breakpoint.
+    @include space.scaled-spacing(gap, 5, 32px);
 
     display: grid;
     grid-template-rows: auto;
