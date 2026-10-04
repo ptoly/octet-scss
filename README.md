@@ -1,3 +1,5 @@
+<img src="assets/octeteIcon.svg" alt="octet-scss" width="120">
+
 # Octet-SCSS
 
 **An 8-point vertical-grid SCSS framework. Spacing, type, and layout all step on eight** — by default. The rhythm is configurable: my own portfolio and the Northern Tool build both ended up on a 4-point grid.
