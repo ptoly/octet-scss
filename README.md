@@ -2,7 +2,7 @@
 
 # Octet-SCSS
 
-**An 8-point vertical-grid SCSS framework. Spacing, type, and layout all step on eight** — by default. The rhythm is configurable: my own portfolio and the Northern Tool build both ended up on a 4-point grid.
+**An 8-point vertical-grid SCSS framework.** Spacing, header typography, and layout all step vertically on an 8-point rhythm (by default — the rhythm is configurable).
 
 I built this because I kept rebuilding it. Every project opened the same way — set the grid, size the type, wire the spacing, fix the reset — so I stopped starting over. Octet-SCSS is the foundation I've carried site to site for years, tightened a little each time. Sharing it was always the plan. It just took me a while to clean it up enough to admit I wrote it.
 
