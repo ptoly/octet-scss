@@ -1,6 +1,6 @@
 {
   "name": "octet-scss",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "8pt-grid SCSS framework: responsive type and layout mixins, single-file layout spacing, a modern reset, and a CSS custom-property color system.",
   "keywords": [
     "scss",

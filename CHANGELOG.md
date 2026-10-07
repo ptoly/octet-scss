@@ -6,6 +6,44 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). While
 the project is pre-1.0, a **minor** bump may carry breaking changes — pin to an
 exact version if that matters to you.
 
+## 0.3.1 — 2026-10-07
+
+First release on npm. The framework is unchanged from 0.3.0. This release
+changes how you get it, not what it emits. No change to emitted CSS.
+
+### Changed
+
+- Published as the `octet-scss` npm package. Until now the only ways in were
+  cloning the repo or adding it as a git submodule. Submodules pin a commit
+  rather than a version and are awkward to update, so they don't suit a shared
+  framework. `npm install octet-scss` gives you a versioned dependency.
+- `package.json` declares a `"sass"` entry and an `exports` map, so Dart Sass's
+  Node package importer resolves `pkg:octet-scss/abstracts` and the other entry
+  points. Plain `octet-scss/abstracts` also resolves when `node_modules` is on
+  the load path.
+- `sass >=1.71.0` is an optional peer dependency. 1.71 is the first release
+  with `pkg:` imports. It's optional because load-path users can bring any
+  compiler that supports the module system.
+- The package ships `abstracts/`, `components/`, `starter-theme/`, the demo
+  `sections/` and `pages/`, and `main.scss`. The README logo in `assets/` is
+  left out.
+
+### Docs
+
+- README: rewrote the install section for npm. It covers `pkg:` versus the
+  load path, with Vite, webpack/Gatsby and CLI setups, and a table of the
+  importable entry points. The stated minimum is now Dart Sass 1.71.
+- `starter-theme/README.md`: replaced the submodule wording with copying the
+  theme out of `node_modules` and repointing its `../abstracts` imports to
+  `octet-scss/abstracts`.
+
+### Upgrading
+
+Submodule users can keep the submodule, since nothing in the source moved. To
+switch, remove the submodule, then `npm install octet-scss`. Next, point Sass
+at `node_modules` (or use `pkg:`), and change imports like
+`../octet-scss/abstracts` to `octet-scss/abstracts`.
+
 ## 0.3.0 — 2026-10-04
 
 Framework tidy-up: dead code out, two silent bugs

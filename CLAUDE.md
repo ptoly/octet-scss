@@ -1,21 +1,10 @@
 # octet-scss
 
-An 8pt vertical-grid SCSS framework, being prepared for its first npm
-publish. Dart Sass, module system only (`@use` / `@forward`, no `@import`).
+An 8pt vertical-grid SCSS framework, distributed on npm as
+`octet-scss`. Dart Sass, module system only (`@use` / `@forward`, no
+`@import`).
 The README is the public API reference: tokens, mixin signatures, theming.
 Read it before changing anything public.
-
-## Current work: npm publish (`nodepublish` branch)
-- `package.json` is in place: `exports` / `"sass"` field, `files` whitelist,
-  optional peer dependency `sass >=1.71.0` (the first version with `pkg:`
-  imports)
-- README install section and `starter-theme/README.md` are rewritten for
-  npm (no more submodule wording)
-- None of this is committed yet: the user commits it on `nodepublish`
-- Still to do: test-install into a separate npm site, then `npm publish`.
-  The user publishes and tags; don't run `npm publish` yourself
-- Once it's published, the user's portfolio (`fct2023`, where this repo was
-  a git submodule) switches to the package. That's out of scope here
 
 ## Layout
 - `abstracts/`: the core. Tokens, mixins, functions, reset, a11y, motion,
@@ -71,6 +60,7 @@ built on it. Generic tokens and modern structure beat matching old output.
   emitted CSS changes, say so. If it doesn't, say "no change to emitted CSS"
 - Ask before deleting a public mixin, function or token. Someone downstream
   may use it
+- The user publishes to npm and tags releases. Don't run `npm publish`
 
 ## Checking changes
 There's no build script or test suite. Compile directly with Sass:
@@ -85,3 +75,8 @@ To test the published import paths, symlink the repo into a scratch
 `--pkg-importer=node`, and `@use "octet-scss/abstracts"` with
 `--load-path=node_modules`. Sass 1.71 places some `@extend`-merged rules in a
 different order than 1.99. The declarations are the same.
+
+Current `sass` needs Node 20+. The nvm default is Node 18 for other
+projects, where `npm i sass@latest` fails with `ERR_REQUIRE_ESM`
+(chokidar). This repo's `.nvmrc` pins Node 24 LTS (`lts/krypton`). Run
+`nvm use` before working here.
