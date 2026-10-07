@@ -30,19 +30,75 @@ The grid is the other half. One 8px base (halved to 4px if you want finer refine
 
 ## Requirements
 
-**Dart Sass**, using the module system — `@use` / `@forward` (no `@import` in the source). Built against Dart Sass 1.99.
+**Dart Sass 1.71+**, using the module system — `@use` / `@forward` (no `@import` in the source). Built against Dart Sass 1.99.
 
 ## Install
 
-Not on npm yet — it's a GitHub repo. Two ways in:
+```bash
+npm install octet-scss
+```
+
+Pre-1.0, a minor bump can break things (see the [changelog](CHANGELOG.md)) — pin an exact version if that matters to you:
 
 ```bash
-# clone it
-git clone https://github.com/ptoly/octet-scss.git
-
-# …or add it as a submodule
-git submodule add https://github.com/ptoly/octet-scss.git src/octet-scss
+npm install --save-exact octet-scss
 ```
+
+### Point Sass at it
+
+Sass doesn't look in `node_modules` on its own. Pick whichever matches your build:
+
+**Node package importer** (Dart Sass 1.71+, modern API) — import with the `pkg:` prefix:
+
+```scss
+@use "pkg:octet-scss/abstracts" as *;
+```
+
+```js
+// Vite — vite.config.js
+import { NodePackageImporter } from "sass";
+
+export default {
+  css: {
+    preprocessorOptions: {
+      scss: { api: "modern-compiler", importers: [new NodePackageImporter()] },
+    },
+  },
+};
+```
+
+```bash
+# Sass CLI
+sass --pkg-importer=node src/main.scss dist/main.css
+```
+
+**Load path** (works everywhere, including the legacy JS API that older webpack / Gatsby setups use) — add `node_modules` and import without the prefix:
+
+```scss
+@use "octet-scss/abstracts" as *;
+```
+
+```js
+// webpack sass-loader / gatsby-plugin-sass
+sassOptions: { includePaths: ["node_modules"] }   // legacy API
+sassOptions: { loadPaths: ["node_modules"] }      // modern API
+```
+
+```bash
+# Sass CLI
+sass --load-path=node_modules src/main.scss dist/main.css
+```
+
+The examples below use the load-path form; with the importer, prefix each path with `pkg:`.
+
+### What you can import
+
+| Path                        | What you get                                                          |
+| --------------------------- | --------------------------------------------------------------------- |
+| `octet-scss/abstracts`      | The core: tokens, mixins, functions, reset, a11y, motion, layout       |
+| `octet-scss/components`     | Buttons and bullet lists (optional)                                    |
+| `octet-scss/starter-theme`  | The example theme as-is — better copied than imported (see below)      |
+| `octet-scss`                | Everything above plus the demo sections and pages — the full showcase |
 
 ## Quick start
 
@@ -64,7 +120,7 @@ Drop the core into your styles, override a token or two, done:
 }
 ```
 
-That's enough to build with. For a real site — app shell, nav, footer, your own palette — start from the **starter theme**: copy it out of the submodule so you can pull framework updates without your changes ever conflicting. The full walkthrough is in [`starter-theme/README.md`](https://claude.ai/chat/starter-theme/README.md).
+That's enough to build with. For a real site — app shell, nav, footer, your own palette — start from the **starter theme**: copy it out of `node_modules/octet-scss/starter-theme/` into your project so you can update the framework without your changes ever conflicting. The full walkthrough is in [`starter-theme/README.md`](starter-theme/README.md).
 
 ## Token & mixin reference
 

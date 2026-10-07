@@ -1,0 +1,52 @@
+{
+  "name": "octet-scss",
+  "version": "0.3.0",
+  "description": "8pt-grid SCSS framework: responsive type and layout mixins, single-file layout spacing, a modern reset, and a CSS custom-property color system.",
+  "keywords": [
+    "scss",
+    "sass",
+    "css-framework",
+    "8pt-grid",
+    "design-tokens",
+    "responsive-typography"
+  ],
+  "author": "Fred Tranfield",
+  "license": "MIT",
+  "homepage": "https://github.com/ptoly/octet-scss#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ptoly/octet-scss.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ptoly/octet-scss/issues"
+  },
+  "sass": "main.scss",
+  "exports": {
+    ".": {
+      "sass": "./main.scss",
+      "default": "./main.scss"
+    },
+    "./*": {
+      "sass": "./*",
+      "default": "./*"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "main.scss",
+    "abstracts/",
+    "components/",
+    "sections/",
+    "pages/",
+    "starter-theme/",
+    "CHANGELOG.md"
+  ],
+  "peerDependencies": {
+    "sass": ">=1.71.0"
+  },
+  "peerDependenciesMeta": {
+    "sass": {
+      "optional": true
+    }
+  }
+}
