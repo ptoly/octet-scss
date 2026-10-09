@@ -49,9 +49,10 @@ preserving any one site's look, including the user's portfolio, which was
 built on it. Generic tokens and modern structure beat matching old output.
 
 ## Change discipline
-- **The user makes all commits.** Make and verify the change, show the diff,
-  and leave it in the working tree. Don't run `git commit`, but do suggest a
-  message. Reviewing each commit is how the user audits the work
+- **Commit only when the user says to.** Make and verify the change, show the
+  diff, suggest a message, and leave it in the working tree. When the user
+  says to commit, run `git commit` yourself. They review every diff in Git
+  Tower, so each commit should be easy to read there. Never push or tag
 - One coherent change per commit; the revert trail matters. Commit subjects
   are past tense and plain ("Guarded scaled-spacing against a negative ramp")
 - **The build must always compile cleanly.** A broken build isn't shareable.
