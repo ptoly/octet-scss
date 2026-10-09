@@ -95,7 +95,9 @@ The examples below use the load-path form; with the importer, prefix each path w
 
 | Path                        | What you get                                                          |
 | --------------------------- | --------------------------------------------------------------------- |
-| `octet-scss/abstracts`      | The core: tokens, mixins, functions, reset, a11y, motion, layout       |
+| `octet-scss/abstracts`      | The core: tokens, mixins, functions, motion, layout. Outputs no CSS     |
+| `octet-scss/base`           | The CSS every page needs: reset, a11y defaults, `:root` color tokens, document defaults (page color, body font, link color) |
+| `octet-scss/utilities`      | Grid classes (`.cols-*`, `.cg-cols-*`, `.css-grid-layout`), helper classes, `html.is-locked` (optional) |
 | `octet-scss/components`     | Buttons and bullet lists (optional)                                    |
 | `octet-scss/starter-theme`  | The example theme as-is — better copied than imported (see below)      |
 | `octet-scss`                | Everything above plus the demo sections and pages — the full showcase |
@@ -105,7 +107,9 @@ The examples below use the load-path form; with the importer, prefix each path w
 Drop the core into your styles, override a token or two, done:
 
 ```scss
-@use "octet-scss/abstracts" as *;   // tokens, mixins, reset, a11y, motion
+@use "octet-scss/abstracts" as *;   // tokens, mixins, functions (no CSS)
+@use "octet-scss/base";             // reset, a11y, :root colors, document defaults
+@use "octet-scss/utilities";        // grid + helper classes (optional)
 
 :root {
   --primary-500: rebeccapurple;   // re-brand a whole ramp…
@@ -139,7 +143,10 @@ That's enough to build with. For a real site — app shell, nav, footer, your ow
 | `$z-base … $z-toast`                       | `0, 10, 100, 200, 300, 400, 500` — named stacking layers     |
 | `$layout-max-width`                        | `1640px !default` — content max width. (Rail width & reflow points are theme-owned — set in `starter-theme/_theme-layout.scss`.) |
 
-### Color tokens (`:root` custom properties) — `abstracts/_colors.scss`
+### Color tokens (`:root` custom properties) — `abstracts/_colors.scss`, emitted by `base/_colors.scss`
+
+The values are Sass maps in abstracts (`$primary`, `$secondary`, `$tertiary`, `$neutral`, `$semantic-colors`); `base` writes them out as custom properties.
+
 
 - **Primitives** (numeric ramps): `--neutral-*`, `--primary-*`, `--secondary-*`, `--tertiary-*`
 - **Semantic**: `--surface-page/-raised/-card/-elevated`, `--text-primary/-secondary/-muted/-on-brand`, `--border-subtle/-default/-strong`, `--brand/-hover/-active/-subtle`, `--accent`, `--highlight`, `--link/-hover`, `--focus-ring`, `--danger`
@@ -166,7 +173,7 @@ That's enough to build with. For a real site — app shell, nav, footer, your ow
 | `prepare-icon($icon, $color, $dimension)`                    | Inject size/colour into a templated SVG (`icon-width` / `icon-color` placeholders) |
 | `url-encode($string)` / `str-replace($string, $search, $replace: '')` | The encoding primitives `inline-svg` is built on — public because custom icon work needs them |
 
-Emitted as CSS by the core: a global `:focus-visible` ring, `.sr-only` / `.visually-hidden` / `.sr-only-focusable` / `.skip-link`, and a `prefers-reduced-motion` reset.
+`abstracts` emits no CSS. Emitted by `base`: the reset, a global `:focus-visible` ring, `.sr-only` / `.visually-hidden` / `.sr-only-focusable` / `.skip-link`, a `prefers-reduced-motion` reset, the `:root` color tokens, and document defaults (`html` color and background, `html`/`body` min-height, `body` font-family and line-height, `a` color and hover).
 
 ## Layout spacing
 
@@ -182,6 +189,7 @@ The override model is **CSS custom properties**. Import the framework, then set 
 
 ```scss
 @use "octet-scss/abstracts" as *;
+@use "octet-scss/base";
 :root { --brand: /* your brand */; --surface-page: /* your bg */; }
 ```
 

@@ -1,0 +1,26 @@
+@use "../abstracts" as *;
+
+// =============================================================================
+//  Document — the element defaults every page needs: page color and
+//  background, full-height html/body, body type, and link color.
+// =============================================================================
+html { color: var(--text-primary); }
+html, body { background-color: var(--surface-page); }
+
+html, body { min-height: 100%; }
+body { margin: 0; min-height: 100%; }   // min-height beats 100vh on mobile
+
+body {
+  line-height: 1.6667;
+  font-family: $font-family-sans;
+}
+
+a {
+  color: var(--link);
+
+  // --link-hover exists as a token precisely for this; without the rule it was
+  // defined, re-branded by themes, and never actually applied.
+  &:hover {
+    color: var(--link-hover);
+  }
+}

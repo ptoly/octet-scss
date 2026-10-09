@@ -6,6 +6,76 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). While
 the project is pre-1.0, a **minor** bump may carry breaking changes — pin to an
 exact version if that matters to you.
 
+## Unreleased
+
+Split the framework into four layers: `abstracts` (no CSS), `base`,
+`utilities` and `starter-theme`. Until now, `@use "octet-scss/abstracts"` was
+both the toolbox and a stylesheet. Loading it to borrow one mixin also wrote
+out the reset, the a11y rules, every `:root` color token and about 9.5 KB of
+grid classes. Now abstracts is pure Sass: it defines things and outputs
+nothing. The CSS comes from layers you choose to load. Code was moved, not
+rewritten. The full `octet-scss` build has the same selectors and declarations
+as before, though some rules appear in a different order.
+
+### Breaking
+
+- `octet-scss/abstracts` no longer emits any CSS. If you relied on it for the
+  reset, focus ring, `.sr-only` / `.skip-link`, reduced-motion or the `:root`
+  colors, add `@use "octet-scss/base";` after it.
+- The grid classes (`.cols-*`, `.cg-cols-*`, `.cols-auto-fit`,
+  `.cg-cols-auto`, `.css-grid-layout`) moved out of `abstracts/layout/_css-grid.scss`
+  into `utilities/_grid.scss`. The `display-grid` mixin stays in abstracts.
+  Add `@use "octet-scss/utilities";` if you use the classes. Their `%cg-cols-*`
+  placeholders moved with them.
+- `abstracts/_reset.scss` moved to `base/_reset.scss`. Direct imports of
+  `octet-scss/abstracts/reset` need the new path.
+- Document essentials moved out of the starter theme into `base/_document.scss`:
+  `html` color and background, `html`/`body` min-height, `body` margin,
+  font-family and line-height, and `a` color plus hover. A copied starter theme
+  that still has these rules will just repeat them, so nothing breaks, but you
+  can delete them from your copy.
+- `starter-theme/_class-utilities.scss` moved to
+  `utilities/_class-utilities.scss`, together with `html.is-locked`.
+  `starter-theme/_base-theme.scss` is gone, since all of its rules moved.
+
+### Changed
+
+- The color values in `abstracts/_colors.scss` are now Sass maps (`$primary`,
+  `$secondary`, `$tertiary`, `$neutral`, `$semantic-colors`), all `!default`.
+  `base/_colors.scss` emits them as the same `:root` custom properties. Runtime
+  overrides in `:root` still work as before.
+- The a11y rules (`:focus-visible`, `.sr-only`, `.visually-hidden`,
+  `.sr-only-focusable`, `.skip-link`, reduced-motion) moved into
+  `base/_a11y.scss`. The mixins stay in `abstracts/_a11y.scss`.
+- `main.scss` loads the layers in this order: abstracts, base, utilities,
+  components, starter-theme, sections, pages.
+- Emitted CSS: the selectors, declarations and values are the same. Base and
+  utility rules now come before components and the theme in the output, and
+  the `a` rule is split in two: `color` and hover in base, `text-decoration`
+  and `font-weight` in the theme.
+- `package.json` `files` now includes `base/` and `utilities/`.
+
+### Docs
+
+- README: added `base` and `utilities` to the import table, and the quick start
+  and theming examples now load `base`.
+- `starter-theme/README.md`: the `main.scss` example loads `base` and
+  `utilities`, and the file table drops the files that moved.
+
+### Upgrading
+
+Change your entry point to:
+
+```scss
+@use "octet-scss/abstracts" as *;
+@use "octet-scss/base";
+@use "octet-scss/utilities";   // if you use the grid or helper classes
+```
+
+If you copied the starter theme, its `_base-theme.scss` and
+`_class-utilities.scss` repeat what's now in `base` and `utilities`. Delete
+them, or stop loading `utilities`.
+
 ## 0.3.1 — 2026-10-07
 
 First release on npm. The framework is unchanged from 0.3.0. This release

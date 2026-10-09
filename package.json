@@ -35,6 +35,8 @@
   "files": [
     "main.scss",
     "abstracts/",
+    "base/",
+    "utilities/",
     "components/",
     "sections/",
     "pages/",

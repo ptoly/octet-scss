@@ -1,18 +1,12 @@
 @use "variables" as vars;
 
 // =============================================================================
-//  Accessibility primitives — AA foundations, on by default.
-//  Bring these in and the framework is accessible before you write a line:
-//  visible focus, screen-reader utilities, a skip link, and reduced-motion.
+//  Accessibility primitives — AA foundations.
+//  The mixins live here; base/_a11y.scss applies them by default (visible
+//  focus, screen-reader utilities, a skip link, and reduced-motion).
 // =============================================================================
 
 // ---- Focus ------------------------------------------------------------------
-// Every focusable element gets a visible, dark-theme-friendly ring by default.
-:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 2px;
-}
-
 // Opt-in override for a bespoke ring on a specific element.
 @mixin focus-visible($color: var(--focus-ring), $width: 2px, $offset: 2px) {
   &:focus-visible {
@@ -35,14 +29,10 @@
   border: 0;
 }
 
-.sr-only,
-.visually-hidden { @include sr-only; }   // .visually-hidden = legacy alias
-
 // Hidden until focused (skip links, "jump to" affordances).
 @mixin sr-only-focusable {
   &:not(:focus):not(:focus-within) { @include sr-only; }
 }
-.sr-only-focusable { @include sr-only-focusable; }
 
 // ---- Skip link --------------------------------------------------------------
 // Hidden until focused, then pinned top-left above everything.
@@ -60,21 +50,5 @@
     border-radius: vars.$radius-md;
     outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
-  }
-}
-.skip-link { @include skip-link; }
-
-// ---- Reduced motion ---------------------------------------------------------
-// AA by default: neutralise animation, transition, and smooth scroll for anyone
-// who asks for reduced motion — framework-wide. The transition() mixin (and any
-// hand-written motion) self-disables through this.
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
 }

@@ -1,0 +1,18 @@
+@use "../abstracts" as *;
+
+// =============================================================================
+//  Color tokens — emits the ramps and semantic roles from abstracts/_colors.scss
+//  as :root custom properties (--primary-500, --brand, …).
+// =============================================================================
+
+:root {
+  @each $ramp, $tones in $color-ramps {
+    @each $tone, $value in $tones {
+      --#{$ramp}-#{$tone}: #{$value};
+    }
+  }
+
+  @each $role, $value in $semantic-colors {
+    --#{$role}: #{$value};
+  }
+}

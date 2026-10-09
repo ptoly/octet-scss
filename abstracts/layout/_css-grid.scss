@@ -1,9 +1,8 @@
-@use "../variables" as vars;
-@use "../responsive-mixins" as mq;
 @use "spacing-mixins" as space;
 
 // =============================================================================
-//  CSS grid — a grid-container helper plus column utility classes (.cg-cols-*).
+//  CSS grid — the grid-container helper. The column utility classes built on it
+//  (.cols-*, .cg-cols-*, .css-grid-layout) live in utilities/_grid.scss.
 // =============================================================================
 
 // Grid container: auto rows + a scaled gap.
@@ -12,73 +11,4 @@
   grid-template-rows: auto;
 
   @include space.scaled-spacing(gap, 5, 32px);
-}
-
-%grid-helpers-base {
-  @include display-grid;
-
-  grid-template-columns: 1fr;
-}
-
-.cols-auto-fit {
-  @extend %grid-helpers-base;
-
-  @include mq.from(720px) {
-    grid-template-columns: repeat(auto-fit, minmax(196px, 1fr));
-  }
-}
-
-// .cg-cols-[1 - 12] classes
-//
-// Utility classes used to create a column grid block element. There can be between 1 to 12 columns.
-// 'cg' stands for css grid.
-//
-// Markup:
-// <div class='cg-cols-3'><div>Column 1 - 3 column layout = .cg-cols-3</div><div>Column 2</div><div>Column 3</div></div><hr /><div class='cg-cols-4'><div>Column 1 - 4 column layout = .cg-cols-4</div><div>Column 2</div><div>Column 3</div><div>Column 4</div></div><hr /><div class='cg-cols-5'><div>Column 1 - 5 column layout...etc.</div><div>Column 2</div><div>Column 3</div><div>Column 4</div><div>Column 5</div></div><hr />
-//
-// Styleguide Layout.CssGrid.cg-cols-#
-
-@for $i from 2 through 12 {
-  .cg-cols-#{$i},
-  %cg-cols-#{$i},
-  .cols-#{$i} {
-    // $breaks must stay <= 5 here: $max - (($breaks - 1) * $step) is the base
-    // value, so 7 breaks put it at -16px and emitted two invalid negative gaps
-    // (browsers dropped them, which is why it looked fine). 5 matches
-    // display-grid above and reaches the same 32px at the widest breakpoint.
-    @include space.scaled-spacing(gap, 5, 32px);
-
-    display: grid;
-    grid-template-rows: auto;
-
-    @include mq.from(540px) {
-      grid-template-columns: repeat($i, 1fr);
-    }
-
-    [class^='cg-cols'] {
-      @include space.scaled-spacing(gap, 2, 16px);
-    }
-  }
-}
-
-.css-grid-layout {
-  display: grid;
-  grid-template-columns:
-        [full-start] minmax(vars.gridx(6), 1fr)
-        [main-start] minmax(0, vars.$layout-max-width)
-        [main-end] minmax(vars.gridx(6), 1fr) [full-end];
-
-  > * {
-    grid-column: main-start / main-end;
-  }
-
-  .hero {
-    grid-column: full-start / full-end;
-  }
-}
-
-.cg-cols-auto {
-  @include display-grid;
-
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }

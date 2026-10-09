@@ -1,0 +1,39 @@
+@use "../abstracts" as *;
+
+// =============================================================================
+//  Accessibility defaults — AA foundations, on by default.
+//  Bring these in and the framework is accessible before you write a line:
+//  visible focus, screen-reader utilities, a skip link, and reduced-motion.
+//  The mixins behind them live in abstracts/_a11y.scss.
+// =============================================================================
+
+// ---- Focus ------------------------------------------------------------------
+// Every focusable element gets a visible, dark-theme-friendly ring by default.
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+// ---- Screen-reader-only -----------------------------------------------------
+.sr-only,
+.visually-hidden { @include sr-only; }   // .visually-hidden = legacy alias
+
+.sr-only-focusable { @include sr-only-focusable; }
+
+// ---- Skip link --------------------------------------------------------------
+.skip-link { @include skip-link; }
+
+// ---- Reduced motion ---------------------------------------------------------
+// AA by default: neutralise animation, transition, and smooth scroll for anyone
+// who asks for reduced motion — framework-wide. The transition() mixin (and any
+// hand-written motion) self-disables through this.
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

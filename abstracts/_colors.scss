@@ -1,105 +1,123 @@
 // =============================================================================
 //  Color tokens · octet-scss
 //  ---------------------------------------------------------------------------
-//  Lean, brandable, all CSS custom properties (override anything at runtime).
+//  Lean, brandable values, emitted as CSS custom properties by base/_colors.scss
+//  (override anything at runtime). This file only defines them; it outputs no CSS.
 //
 //    1. Primitives — raw scales: primary / secondary / tertiary + neutral,
 //       nine tones each (100 lightest → 900 darkest, 500 = base).
+//       Each ramp becomes --<ramp>-<tone> (e.g. --primary-500).
 //    2. Semantic   — role tokens (brand, link, surface…) that point at the
-//       primitives. Style against THESE, not the raw scales.
+//       primitives. Each becomes --<role>. Style against THESE, not the raw scales.
 //
 //  Ordered customize-first: the things you re-brand come before the neutral
 //  scaffolding you usually keep. Re-brand by overriding a ramp — or a single
-//  semantic token — in your own :root; see themes/_theme-colors.scss.
+//  semantic token — in your own :root; see starter-theme/_theme-colors.scss.
+// =============================================================================
+@use "sass:string";
+
+// =============================================================================
+//  1 · Primitives
 // =============================================================================
 
-:root {
-  // ===========================================================================
-  //  1 · Primitives
-  // ===========================================================================
+// ---- Primary — indigo (default) ----------------------------------------------
+$primary: (
+  100: #eef1ff,
+  200: #dde3ff,
+  300: #c0caff,
+  400: #97a5fb,
+  500: #5b7cfa,
+  600: #4661e0,
+  700: #3a4cba,
+  800: #2e3b8f,
+  900: #212a63,
+) !default;
 
-  // ---- Primary — indigo (default) ------------------------------------------
-  --primary-100: #eef1ff;
-  --primary-200: #dde3ff;
-  --primary-300: #c0caff;
-  --primary-400: #97a5fb;
-  --primary-500: #5b7cfa;
-  --primary-600: #4661e0;
-  --primary-700: #3a4cba;
-  --primary-800: #2e3b8f;
-  --primary-900: #212a63;
+// ---- Secondary — teal --------------------------------------------------------
+$secondary: (
+  100: #e7faf6,
+  200: #c6f2e9,
+  300: #93e6d5,
+  400: #52d1bb,
+  500: #22b39c,
+  600: #199484,
+  700: #16766a,
+  800: #145d54,
+  900: #0f4540,
+) !default;
 
-  // ---- Secondary — teal ----------------------------------------------------
-  --secondary-100: #e7faf6;
-  --secondary-200: #c6f2e9;
-  --secondary-300: #93e6d5;
-  --secondary-400: #52d1bb;
-  --secondary-500: #22b39c;
-  --secondary-600: #199484;
-  --secondary-700: #16766a;
-  --secondary-800: #145d54;
-  --secondary-900: #0f4540;
+// ---- Tertiary — amber --------------------------------------------------------
+$tertiary: (
+  100: #fef4e0,
+  200: #fce4b8,
+  300: #f9d183,
+  400: #f5bd54,
+  500: #f0a92e,
+  600: #d98a17,
+  700: #b46c12,
+  800: #8c5312,
+  900: #6e4708,
+) !default;
 
-  // ---- Tertiary — amber ----------------------------------------------------
-  --tertiary-100: #fef4e0;
-  --tertiary-200: #fce4b8;
-  --tertiary-300: #f9d183;
-  --tertiary-400: #f5bd54;
-  --tertiary-500: #f0a92e;
-  --tertiary-600: #d98a17;
-  --tertiary-700: #b46c12;
-  --tertiary-800: #8c5312;
-  --tertiary-900: #6e4708;
+// ---- Neutral — surfaces, text, lines (9 tones, 100 lightest → 900 darkest) ---
+//  Warm neutral, weighted toward the dark end so a dark UI has enough distinct
+//  surface steps (900–600 = the depth ladder; 100–300 = text; 400/500 = lines).
+$neutral: (
+  100: #e8e5e2,
+  200: #bfbeb9,
+  300: #8f8d88,
+  400: #5d5c58,
+  500: #3e3d3a,
+  600: #2b2a28,
+  700: #1f1e1c,
+  800: #151513,
+  900: #0b0b0a,
+) !default;
 
-  // ---- Neutral — surfaces, text, lines (9 tones, 100 lightest → 900 darkest) -
-  //  Warm neutral, weighted toward the dark end so a dark UI has enough distinct
-  //  surface steps (900–600 = the depth ladder; 100–300 = text; 400/500 = lines).
-  --neutral-100: #e8e5e2;
-  --neutral-200: #bfbeb9;
-  --neutral-300: #8f8d88;
-  --neutral-400: #5d5c58;
-  --neutral-500: #3e3d3a;
-  --neutral-600: #2b2a28;
-  --neutral-700: #1f1e1c;
-  --neutral-800: #151513;
-  --neutral-900: #0b0b0a;
+// Emission order for the ramps above (name → map).
+$color-ramps: (
+  primary:   $primary,
+  secondary: $secondary,
+  tertiary:  $tertiary,
+  neutral:   $neutral,
+) !default;
 
-  // ===========================================================================
-  //  2 · Semantic
-  // ===========================================================================
-
+// =============================================================================
+//  2 · Semantic
+// =============================================================================
+$semantic-colors: (
   // ---- Brand — primary role ------------------------------------------------
-  --brand:        var(--primary-500);
-  --brand-hover:  var(--primary-400);
-  --brand-active: var(--primary-600);
-  --brand-subtle: var(--primary-900);   // tinted surface on dark
+  brand:        var(--primary-500),
+  brand-hover:  var(--primary-400),
+  brand-active: var(--primary-600),
+  brand-subtle: var(--primary-900),   // tinted surface on dark
 
   // ---- Accents — secondary / tertiary roles --------------------------------
-  --accent:    var(--secondary-500);
-  --highlight: var(--tertiary-500);
+  accent:    var(--secondary-500),
+  highlight: var(--tertiary-500),
 
   // ---- Interactive ---------------------------------------------------------
-  --link:       var(--primary-300);
-  --link-hover: var(--primary-200);
-  --focus-ring: var(--primary-400);
+  link:       var(--primary-300),
+  link-hover: var(--primary-200),
+  focus-ring: var(--primary-400),
 
   // ---- Surfaces — depth ladder ---------------------------------------------
-  --surface-page:     var(--neutral-900);
-  --surface-raised:   var(--neutral-800);
-  --surface-card:     var(--neutral-700);
-  --surface-elevated: var(--neutral-600);
+  surface-page:     var(--neutral-900),
+  surface-raised:   var(--neutral-800),
+  surface-card:     var(--neutral-700),
+  surface-elevated: var(--neutral-600),
 
   // ---- Text ----------------------------------------------------------------
-  --text-primary:   var(--neutral-100);
-  --text-secondary: var(--neutral-200);
-  --text-muted:     var(--neutral-300);
-  --text-on-brand:  var(--neutral-900);   // dark text on a bright brand fill
+  text-primary:   var(--neutral-100),
+  text-secondary: var(--neutral-200),
+  text-muted:     var(--neutral-300),
+  text-on-brand:  var(--neutral-900),   // dark text on a bright brand fill
 
   // ---- Borders -------------------------------------------------------------
-  --border-subtle:  rgb(255 255 255 / 0.06);
-  --border-default: var(--neutral-500);   // sits above the 900–600 surface ladder, so it stays visible
-  --border-strong:  var(--neutral-400);
+  border-subtle:  string.unquote("rgb(255 255 255 / 0.06)"),   // a string, so Sass emits it as written
+  border-default: var(--neutral-500),   // sits above the 900–600 surface ladder, so it stays visible
+  border-strong:  var(--neutral-400),
 
   // ---- Signal --------------------------------------------------------------
-  --danger: #ff4d4f;   // extend with --success / --warning as needed
-}
+  danger: #ff4d4f,   // extend with --success / --warning as needed
+) !default;

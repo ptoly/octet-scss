@@ -1,6 +1,6 @@
 # Octet-SCSS starter-theme
 
-A generic, ready-to-brand theme built on the Octet-SCSS core (app shell, nav, footer, base document styles, typography, block spacing, utilities, icon helpers). It's meant to be **copied out of the framework** and customized, so you can update the framework without your changes ever conflicting.
+A generic, ready-to-brand theme built on the Octet-SCSS core (app shell, nav, footer, typography, block spacing, icon helpers). Document essentials and utility classes aren't in here; they ship in the framework's `base/` and `utilities/` layers. It's meant to be **copied out of the framework** and customized, so you can update the framework without your changes ever conflicting.
 
 ## Quick start
 
@@ -28,7 +28,9 @@ sed -i.bak 's#"\.\./abstracts#"octet-scss/abstracts#' src/my-theme/*.scss && rm 
 **3. Give it an entry point.** Add `src/my-theme/main.scss`:
 
 ```scss
-@use "octet-scss/abstracts" as *;      // tokens, mixins, a11y, motion, reset, layout
+@use "octet-scss/abstracts" as *;      // tokens, mixins, functions (no CSS)
+@use "octet-scss/base";                // reset, a11y, :root colors, document defaults
+@use "octet-scss/utilities";           // grid + helper classes  (optional)
 @use "brand";                          // your palette (see step 5)
 @use "octet-scss/components";          // buttons, lists  (optional)
 
@@ -55,10 +57,8 @@ Because your `brand` loads **after** the framework's `:root`, your values win.
 | ----------------------------- | ------------------------------------------------------------ |
 | `_theme-layout.scss`          | `.app-shell` — nav rail + scrolling main column              |
 | `_nav.scss` / `_footer.scss`  | Generic nav + footer                                         |
-| `_base-theme.scss`            | Document color/background, scroll-lock                       |
 | `_typography.scss`            | Body text + a decoupled heading level/size system            |
 | `_theme-spacing.scss`         | Vertical rhythm between blocks (the one spacing file)        |
-| `_class-utilities.scss`       | `.no-wrap`, `.center`, `.max-width`, `.readability-width`, `.unstyled` |
 | `_icons.scss`                 | The theme's own icon + treatment (`link-arrow-right`). The generic inline-SVG helpers live in `abstracts/_icons.scss` |
 | `_theme-colors.scss`          | An example re-brand (ember). Copy → `_brand.scss` and edit.  |
 | `_index.scss`                 | Loads the chrome.                                            |
@@ -70,4 +70,4 @@ Because your `brand` loads **after** the framework's `:root`, your values win.
 - **Name classes with BEM** — block · `block__element` · `block--modifier`, state on attributes, IDs for hooks not styling. See [Naming conventions](../README.md#naming-conventions) in the core README; the shipped chrome here (`.nav`, `.footer`, `.app-shell`) are worked examples.
 - **Accessibility primitives ship in the core** — focus rings, `.sr-only`, skip links, and reduced-motion are on by default. Wiring them into real, conformant pages (semantic markup, contrast, focus order) is your part.
 
-The framework core is documented in `octet-scss` itself; this theme only depends on `@use "octet-scss/abstracts"` (and, optionally, `components`).
+The framework core is documented in `octet-scss` itself; this theme depends on `@use "octet-scss/abstracts"` and expects `octet-scss/base` to be loaded first (`utilities` and `components` are optional).

@@ -1,0 +1,8 @@
+// =============================================================================
+//  Base — the CSS every page needs: reset, accessibility defaults, the :root
+//  color tokens, and document-level element defaults. Built on abstracts.
+// =============================================================================
+@forward "reset";
+@forward "a11y";
+@forward "colors";
+@forward "document";

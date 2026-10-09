@@ -7,8 +7,11 @@ The README is the public API reference: tokens, mixin signatures, theming.
 Read it before changing anything public.
 
 ## Layout
-- `abstracts/`: the core. Tokens, mixins, functions, reset, a11y, motion,
-  layout. Emits only a11y/reset CSS. This is the main public API
+- `abstracts/`: the core. Tokens, mixins, functions, motion, layout. Emits
+  **no** CSS (color values are Sass maps here). This is the main public API
+- `base/`: the CSS every page needs. Reset, a11y rules, `:root` color tokens,
+  document defaults (html/body, body font, link color)
+- `utilities/`: grid classes, helper classes, `html.is-locked`
 - `components/`: buttons, bullet lists (optional)
 - `starter-theme/`: example theme, meant to be **copied** into the user's
   project, not imported. Its partials use `../abstracts`, and the copy step

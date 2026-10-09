@@ -17,10 +17,7 @@
 $body-line-height: 1.66667; // [30px]
 
 // ---- Base text --------------------------------------------------------------
-body {
-  line-height: 1.6667;
-  font-family: $font-family-sans;
-}
+// body font-family / line-height live in base/_document.scss.
 
 // Flow spacing — bottom margin on stacked text blocks.
 p:not(:last-child), blockquote, .rtf p, .bullet-list {
@@ -48,16 +45,10 @@ p {
   }
 }
 
+// Link color + hover live in base/_document.scss; this is the theme's treatment.
 a {
-  color: var(--link);
   text-decoration: none;
   font-weight: 500;
-
-  // --link-hover exists as a token precisely for this; without the rule it was
-  // defined, re-branded by themes, and never actually applied.
-  &:hover {
-    color: var(--link-hover);
-  }
 }
 
 a.has-arrow {

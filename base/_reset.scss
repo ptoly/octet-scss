@@ -54,5 +54,6 @@ textarea {
   border: 0 !important;
 }
 
-// Screen-reader-only helpers now live in abstracts/_a11y.scss
-// (mixin `sr-only`, classes `.sr-only` / `.visually-hidden`).
+// Screen-reader-only helpers live in base/_a11y.scss
+// (classes `.sr-only` / `.visually-hidden`; the `sr-only` mixin is in
+// abstracts/_a11y.scss).
