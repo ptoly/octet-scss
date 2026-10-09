@@ -30,12 +30,13 @@ sed -i.bak 's#"\.\./abstracts#"octet-scss/abstracts#' src/my-theme/*.scss && rm 
 ```scss
 @use "octet-scss/abstracts" as *;      // tokens, mixins, functions (no CSS)
 @use "octet-scss/base";                // reset, a11y, :root colors, document defaults
-@use "octet-scss/utilities";           // grid + helper classes  (optional)
 @use "brand";                          // your palette (see step 5)
 @use "octet-scss/components";          // buttons, lists  (optional)
 
 @use "index";                          // this theme's chrome
 // @use "sections";  @use "pages";     // add your own content layers
+
+@use "octet-scss/utilities";           // grid + helper classes (optional); last, so they win
 ```
 
 **4. Point your app at it.** Import `src/my-theme/main.scss` wherever you load styles (e.g. a layout component), instead of `octet-scss`.

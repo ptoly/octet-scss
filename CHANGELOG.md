@@ -47,12 +47,19 @@ as before, though some rules appear in a different order.
 - The a11y rules (`:focus-visible`, `.sr-only`, `.visually-hidden`,
   `.sr-only-focusable`, `.skip-link`, reduced-motion) moved into
   `base/_a11y.scss`. The mixins stay in `abstracts/_a11y.scss`.
-- `main.scss` loads the layers in this order: abstracts, base, utilities,
-  components, starter-theme, sections, pages.
-- Emitted CSS: the selectors, declarations and values are the same. Base and
-  utility rules now come before components and the theme in the output, and
-  the `a` rule is split in two: `color` and hover in base, `text-decoration`
-  and `font-weight` in the theme.
+- `main.scss` loads the layers in this order: abstracts, base, components,
+  starter-theme, sections, pages, utilities. Utilities load last on purpose:
+  when a utility class and a component or theme class of the same specificity
+  set the same property, the utility wins. So `class="card max-width"` gets the
+  `max-width` you asked for.
+- Emitted CSS: the selectors, declarations and values are the same. Base
+  rules now come before components and the theme in the output, and utility
+  rules come after everything else. Before, the grid classes came first and the
+  class utilities sat in the middle of the theme. Wherever a utility class and a
+  same-specificity class are on the same element, the utility now wins.
+  `.unstyled` already beat `.btn`, and the grid classes now beat component
+  `display` / `gap` values. The `a` rule is split in two: `color` and hover in
+  base, `text-decoration` and `font-weight` in the theme.
 - `package.json` `files` now includes `base/` and `utilities/`.
 
 ### Docs
@@ -69,7 +76,8 @@ Change your entry point to:
 ```scss
 @use "octet-scss/abstracts" as *;
 @use "octet-scss/base";
-@use "octet-scss/utilities";   // if you use the grid or helper classes
+// … components, your theme, your own styles …
+@use "octet-scss/utilities";   // last, so utility classes win; if you use them
 ```
 
 If you copied the starter theme, its `_base-theme.scss` and
