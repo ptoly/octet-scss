@@ -6,7 +6,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). While
 the project is pre-1.0, a **minor** bump may carry breaking changes — pin to an
 exact version if that matters to you.
 
-## Unreleased
+## 0.4.0 — 2026-10-09
 
 Split the framework into four layers: `abstracts` (no CSS), `base`,
 `utilities` and `starter-theme`. Until now, `@use "octet-scss/abstracts"` was
@@ -65,7 +65,10 @@ as before, though some rules appear in a different order.
 ### Docs
 
 - README: added `base` and `utilities` to the import table, and the quick start
-  and theming examples now load `base`.
+  and theming examples now load `base`. A new "Load order" section explains the
+  layer order and why utilities go last. A new "Utility classes" table lists
+  what `utilities/` provides; the grid classes were not documented before.
+  The theming section notes that the color maps can be configured at import.
 - `starter-theme/README.md`: the `main.scss` example loads `base` and
   `utilities`, and the file table drops the files that moved.
 

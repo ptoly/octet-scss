@@ -26,6 +26,7 @@ The grid is the other half. One 8px base (halved to 4px if you want finer refine
 - **Z-index scale** — named stacking layers, no magic numbers
 - **Elevation** — layered shadows, nine graduated levels
 - **Modern CSS reset** — box-sizing, zeroed margins, sensible element defaults
+- **Layered, opt-in CSS** — `abstracts` is pure Sass and emits nothing; `base`, `utilities` and `components` are the CSS you choose to load
 - **Max-readability measure** — `$layout-readable-width` (720px) for comfortable line length
 
 ## Requirements
@@ -102,6 +103,17 @@ The examples below use the load-path form; with the importer, prefix each path w
 | `octet-scss/starter-theme`  | The example theme as-is — better copied than imported (see below)      |
 | `octet-scss`                | Everything above plus the demo sections and pages — the full showcase |
 
+### Load order
+
+Load the layers in this order. Each one builds on the ones before it:
+
+1. `abstracts`: tokens and mixins. Emits no CSS, so it's safe to `@use` from any partial
+2. `base`: reset, a11y, `:root` colors, document defaults
+3. `components`, your theme, your own styles
+4. `utilities`: **last**, so a utility class wins over a component or theme class of the same specificity (`class="card max-width"` gets the max-width)
+
+Sass requires `@use` at the top of a file, so in practice your entry point is a list of `@use` lines, with your own styles in partials loaded before `utilities`.
+
 ## Quick start
 
 Drop the core into your styles, override a token or two, done:
@@ -109,7 +121,7 @@ Drop the core into your styles, override a token or two, done:
 ```scss
 @use "octet-scss/abstracts" as *;   // tokens, mixins, functions (no CSS)
 @use "octet-scss/base";             // reset, a11y, :root colors, document defaults
-@use "octet-scss/utilities";        // grid + helper classes (optional)
+@use "octet-scss/utilities";        // grid + helper classes (optional; see Load order)
 
 :root {
   --primary-500: rebeccapurple;   // re-brand a whole ramp…
@@ -175,6 +187,18 @@ The values are Sass maps in abstracts (`$primary`, `$secondary`, `$tertiary`, `$
 
 `abstracts` emits no CSS. Emitted by `base`: the reset, a global `:focus-visible` ring, `.sr-only` / `.visually-hidden` / `.sr-only-focusable` / `.skip-link`, a `prefers-reduced-motion` reset, the `:root` color tokens, and document defaults (`html` color and background, `html`/`body` min-height, `body` font-family and line-height, `a` color and hover).
 
+### Utility classes — `utilities/`
+
+| Class                                        | Does                                                         |
+| -------------------------------------------- | ------------------------------------------------------------ |
+| `.cols-2` … `.cols-12` / `.cg-cols-2` … `.cg-cols-12` | Grid with N equal columns from 540px up (one column below), scaled gap. A `.cg-cols-*` nested inside gets a tighter gap |
+| `.cols-auto-fit` / `.cg-cols-auto`           | Auto-fit grid: 196px minimum columns from 720px up (one column below) / 200px minimum columns at all widths |
+| `.css-grid-layout`                           | Page grid: children sit in a centered `$layout-max-width` column; a child `.hero` spans full bleed |
+| `.max-width` / `.readability-width`          | Cap at `$layout-max-width` / `$layout-readable-width` (720px) |
+| `.center` / `.no-wrap`                       | `text-align: center` / `white-space: nowrap`                 |
+| `.unstyled`                                  | Strip a `<button>` (or other control) to bare styles while keeping it focusable |
+| `html.is-locked`                             | Lock page scroll while a full-screen menu or modal is open   |
+
 ## Layout spacing
 
 One file owns the vertical rhythm — the spacing *between* blocks. I kept inheriting projects with margins and padding scattered across dozens of partials, no two sections spaced quite the same. Pulling every block-level margin into a single spacing file fixed that: the rhythm lives in one place, so it's consistent by construction and auditable at a glance. Spacing that's internal to a component (padding inside a card, say) still co-locates with its component — it's *layout* spacing that centralizes.
@@ -201,6 +225,8 @@ Most SCSS tokens (`$breakpoints`, `$radius-*`, motion, z-index, layout dimension
   $rem-base: 18px    // default 16px — the root size rem() divides by
 );
 ```
+
+The color maps (`$primary`, `$secondary`, `$tertiary`, `$neutral`, `$semantic-colors`) are `!default` too, so you can also set the palette at compile time. Overriding the custom properties in `:root` is usually simpler.
 
 If you re-base `$rem-base`, also set the matching document root so the two agree — and set it as a **percentage** (not a hard px) so body copy still honors the reader's font-size preference:
 
