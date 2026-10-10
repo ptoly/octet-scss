@@ -22,7 +22,7 @@ The grid is the other half. One 8px base (halved to 4px if you want finer refine
 - **Responsive layout mixins** — `from()` / `until()`, `display-grid`, `max-width`, `scaled-spacing`
 - **Single-file spacing** — one breakpoint scale drives vertical rhythm, all in one place, for consistency (see more below)
 - **Accessibility-ready (WCAG AA)** — focus-visible ring, `.sr-only`, skip link, reduced-motion reset, on by default
-- **Motion tokens** — durations, easings, and a `transition()` mixin that self-disables under reduced-motion
+- **Motion tokens** — durations, easings, and a `transition()` mixin, turned off under reduced-motion by the reset in `base`
 - **Z-index scale** — named stacking layers, no magic numbers
 - **Elevation** — layered shadows, nine graduated levels
 - **Modern CSS reset** — box-sizing, zeroed margins, sensible element defaults
@@ -177,7 +177,7 @@ The values are Sass maps in abstracts (`$primary`, `$secondary`, `$tertiary`, `$
 | `display-grid`                                               | `display: grid` + a scaled gap                               |
 | `max-width`                                                  | Centered container capped at `$layout-max-width`             |
 | `elevation($elevation)`                                      | Layered box-shadow, nine graduated levels                    |
-| `transition($properties: all, $duration: $duration-base, $easing: $ease-standard)` | Token-based transition (self-disables under reduced-motion)  |
+| `transition($properties: all, $duration: $duration-base, $easing: $ease-standard)` | Token-based transition (turned off under reduced-motion by the reset in `base`)|
 | `focus-visible($color: var(--focus-ring), $width: 2px, $offset: 2px)` | Custom focus ring                                            |
 | `sr-only` / `sr-only-focusable` / `skip-link`                | Screen-reader / skip-link utilities                          |
 | `roundto($value, $nearest)`                                  | Round up to the nearest multiple                             |

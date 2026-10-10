@@ -26,7 +26,7 @@
 // ---- Reduced motion ---------------------------------------------------------
 // AA by default: neutralise animation, transition, and smooth scroll for anyone
 // who asks for reduced motion — framework-wide. The transition() mixin (and any
-// hand-written motion) self-disables through this.
+// hand-written motion) is turned off through this.
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

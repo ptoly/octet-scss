@@ -6,6 +6,18 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). While
 the project is pre-1.0, a **minor** bump may carry breaking changes — pin to an
 exact version if that matters to you.
 
+## Unreleased
+
+### Docs
+
+- Corrected the claim that `transition()` "self-disables" under reduced motion.
+  Since 0.4.0 the `prefers-reduced-motion` reset lives in `base`, so a project
+  that loads only `abstracts` keeps its transitions for reduced-motion users.
+  The README and source comments now say the reset in `base` turns them off.
+  The mixin is unchanged: one global reset also covers hand-written
+  transitions, animations and smooth scroll, which a per-mixin media query
+  would miss. No change to emitted CSS.
+
 ## 0.4.0 — 2026-10-09
 
 Split the framework into four layers: `abstracts` (no CSS), `base`,

@@ -5,8 +5,9 @@
 //  Motion — token-based transitions.
 //  ---------------------------------------------------------------------------
 //  Reach for this instead of hand-writing `transition`. It reads from the
-//  duration/easing tokens, and self-disables for reduced-motion users via the
-//  global reset in _a11y.scss.
+//  duration/easing tokens. It does not handle reduced motion itself: the global
+//  reset in base/_a11y.scss turns it off, so load `base` (or write your own
+//  reset) if you use abstracts alone.
 //
 //    $properties  a property or space-list (`opacity`, `background-color color`)
 //    $duration    a $duration-* token (default $duration-base)
