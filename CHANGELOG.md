@@ -17,6 +17,27 @@ exact version if that matters to you.
   The mixin is unchanged: one global reset also covers hand-written
   transitions, animations and smooth scroll, which a per-mixin media query
   would miss. No change to emitted CSS.
+- Clarified what `_theme-spacing.scss` is for: all spacing that has to stay
+  consistent, meaning block rhythm *and* gutters or insets shared across
+  components, applied by selector. Padding unique to one component still
+  co-locates with it. The README and the file's header comment now also say
+  not to start a second spacing file or a parallel layer of spacing mixins,
+  which a downstream project did. No change to emitted CSS.
+- Made the starter-theme setup harder to miss. The main README now has a
+  "Starting a real project" section listing the five copy-and-customize steps
+  from `starter-theme/README.md`, instead of a single pointer sentence. Also
+  fixed the Theming paragraph, which read as "copy the starter theme to
+  `_brand.scss`" when it meant `_theme-colors.scss`. No change to emitted CSS.
+- Added `CONVENTIONS.md`, a terse, literal rulebook for writing styles in a
+  project built on octet-scss: file ownership, load order, spacing, units,
+  color, naming, and a done checklist. It's written for AI coding assistants
+  as much as people, and it ships in the package so a project can point its
+  `CLAUDE.md` / `AGENTS.md` at `node_modules/octet-scss/CONVENTIONS.md`. The
+  README links to it. No change to emitted CSS.
+- Relaxed the spacing rule from "always `margin-bottom`, never `margin-top`"
+  to "mostly `margin-bottom`", and dropped the specific exceptions (a caption,
+  page content below the header). The direction is a consistency default, not
+  a law; edge cases are the developer's call. No change to emitted CSS.
 
 ## 0.4.0 — 2026-10-09
 

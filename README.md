@@ -136,7 +136,27 @@ Drop the core into your styles, override a token or two, done:
 }
 ```
 
-That's enough to build with. For a real site — app shell, nav, footer, your own palette — start from the **starter theme**: copy it out of `node_modules/octet-scss/starter-theme/` into your project so you can update the framework without your changes ever conflicting. The full walkthrough is in [`starter-theme/README.md`](starter-theme/README.md).
+That's enough to build with.
+
+### Starting a real project
+
+For a real site or app (your own palette, type, spacing and chrome), start from the **starter theme**. Don't import it; copy it, so you can update the framework without your changes ever conflicting. Follow the five steps in [`starter-theme/README.md`](starter-theme/README.md#quick-start), in order:
+
+1. Copy `node_modules/octet-scss/starter-theme/` into your project
+2. Repoint its imports from `../abstracts` to `octet-scss/abstracts`
+3. Give it an entry point that loads the layers in the [load order](#load-order)
+4. Point your app at that entry point instead of `octet-scss`
+5. Brand it: copy `_theme-colors.scss` to `_brand.scss` and set your tokens
+
+Then delete the chrome you don't need (nav, footer, app shell). Keep `_theme-spacing.scss`: it's where your project's spacing lives (see [Layout spacing](#layout-spacing)).
+
+### Working with an AI coding assistant
+
+[`CONVENTIONS.md`](CONVENTIONS.md) is the rulebook in checklist form: where styles live, spacing, units, color, naming, and what to check before adding a token. It ships with the package, so point your assistant at it with one line in your project's `CLAUDE.md`, `AGENTS.md` or equivalent:
+
+```
+Follow node_modules/octet-scss/CONVENTIONS.md for all styles.
+```
 
 ## Token & mixin reference
 
@@ -201,9 +221,18 @@ The values are Sass maps in abstracts (`$primary`, `$secondary`, `$tertiary`, `$
 
 ## Layout spacing
 
-One file owns the vertical rhythm — the spacing *between* blocks. I kept inheriting projects with margins and padding scattered across dozens of partials, no two sections spaced quite the same. Pulling every block-level margin into a single spacing file fixed that: the rhythm lives in one place, so it's consistent by construction and auditable at a glance. Spacing that's internal to a component (padding inside a card, say) still co-locates with its component — it's *layout* spacing that centralizes.
+One file owns spacing that has to be consistent: `_theme-spacing.scss`. I kept inheriting projects with margins and padding scattered across dozens of partials, no two sections spaced quite the same. Pulling that spacing into a single file fixed it: the rhythm lives in one place, so it's consistent by construction and auditable at a glance.
 
-And it's always `margin-bottom`, never `margin-top`. Every block pushes the next one down, so spacing flows in one direction — top to bottom, the way you read it. One direction means margins never fight or double up, and "how far apart are these two blocks?" always has a single answer, on the block above. The rare exception is an element that genuinely belongs *below* another (a caption under its image); everything else pushes down.
+What goes in it:
+
+- **Block rhythm**: the spacing *between* blocks (sections, cards, lists)
+- **Shared insets**: any gutter or padding that several components must match, like a card header, a toolbar and table cells sharing one horizontal inset. Apply it here, by selector, so a change in one place moves them all
+
+What stays with its component: padding that belongs to that component alone (the inside of a button, say).
+
+Don't start a second spacing file or a separate layer of spacing mixins and variables. Extend this one.
+
+And it's mostly `margin-bottom`. Every block pushes the next one down, so spacing flows in one direction — top to bottom, the way you read it. One direction means margins rarely fight or double up, and "how far apart are these two blocks?" has a single answer, on the block above.
 
 Spacing steps on the 8pt grid through `scaled-spacing()` across `$breakpoints`, so vertical rhythm stays on the baseline as the viewport grows. `starter-theme/_theme-spacing.scss` is the worked example.
 
@@ -234,7 +263,7 @@ If you re-base `$rem-base`, also set the matching document root so the two agree
 html { font-size: 112.5%; }   // 18px at the 16px browser default; scales with the reader
 ```
 
-A generic example theme ships in **`starter-theme/`** (renamed from `themes/`) — including `_theme-colors.scss`, an opt-in "ember" re-brand showing both ways to re-skin (swap a ramp, or retarget individual semantic tokens). Copy it to your own `_brand.scss` and edit. `starter-theme/README.md` documents the copy-and-customize workflow.
+A generic example theme ships in **`starter-theme/`**, including `_theme-colors.scss`, an opt-in "ember" re-brand showing both ways to re-skin (swap a ramp, or retarget individual semantic tokens). Once you've copied the theme into your project, copy `_theme-colors.scss` to `_brand.scss` and edit that. See [Starting a real project](#starting-a-real-project).
 
 ## Naming conventions
 

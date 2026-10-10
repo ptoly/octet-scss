@@ -22,6 +22,10 @@ Read it before changing anything public.
 - `assets/`: README logo only. Left out of the npm package
 
 ## Conventions (settled; follow them, don't re-argue them)
+The user-facing version of these rules is `CONVENTIONS.md`, written for
+people and AI assistants working in projects that use octet-scss. When a
+convention changes, update both, and keep CONVENTIONS.md literal and terse.
+
 - CSS custom properties for runtime values. SCSS variables for compile-time
   values (breakpoints, because media queries can't read `var()`)
 - Pixels for UI and display type. Body copy (p, lists, captions) uses the
@@ -32,8 +36,8 @@ Read it before changing anything public.
 - Vertical spacing is stepped (`scaled-spacing`), not clamped, so it stays on
   the 8pt baseline. Horizontal spacing is fluid (`fluid-gutter`)
 - All block-level layout spacing lives in ONE file, on purpose (see
-  `starter-theme/_theme-spacing.scss`). Always `margin-bottom`, never
-  `margin-top`
+  `starter-theme/_theme-spacing.scss`), including gutters and insets shared
+  across components. Mostly `margin-bottom`
 - Group code by unit of work, not by kind of code
 - One `$breakpoints` scale: 360, 540, 720, 900, 1280, 1366, 1441px. It drives
   vertical rhythm and is the list `from()` / `until()` pick from. Theme reflow

@@ -59,7 +59,7 @@ Because your `brand` loads **after** the framework's `:root`, your values win.
 | `_theme-layout.scss`          | `.app-shell` — nav rail + scrolling main column              |
 | `_nav.scss` / `_footer.scss`  | Generic nav + footer                                         |
 | `_typography.scss`            | Body text + a decoupled heading level/size system            |
-| `_theme-spacing.scss`         | Vertical rhythm between blocks (the one spacing file)        |
+| `_theme-spacing.scss`         | The one spacing file: rhythm between blocks, plus gutters and insets shared across components. Keep it; extend it rather than adding another |
 | `_icons.scss`                 | The theme's own icon + treatment (`link-arrow-right`). The generic inline-SVG helpers live in `abstracts/_icons.scss` |
 | `_theme-colors.scss`          | An example re-brand (ember). Copy → `_brand.scss` and edit.  |
 | `_index.scss`                 | Loads the chrome.                                            |
