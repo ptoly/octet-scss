@@ -1,5 +1,28 @@
 @use "../abstracts" as *;
 
+// =============================================================================
+//  Layout — the single home for layout.
+//  ---------------------------------------------------------------------------
+//  Like _theme-spacing.scss, this file exists for consistency. Layout that
+//  has to match across the site lives here, applied by selector:
+//
+//  - Page layout: the app shell, columns, reflow points.
+//  - Shared component layout: sizing and alignment that like elements must
+//    share. Inputs, selects and buttons get one control height, so a form
+//    row lines up and a select never sits a few pixels off its neighbor.
+//
+//  Layout that belongs to one component alone stays in that component's
+//  partial. Don't start a second layout file; extend this one.
+//
+//  Example (not emitted; adapt in your copy):
+//
+//    input:not([type="checkbox"], [type="radio"]),
+//    select,
+//    .btn {
+//      block-size: gridx(5);   // one control height, on the grid
+//    }
+// =============================================================================
+
 // Generic layout dimensions — edit these in your own copy of the starter.
 // (Portfolio-specific values live in the consuming project, not the framework.)
 $rail-width:    280px;    // nav-rail column width

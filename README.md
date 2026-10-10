@@ -148,7 +148,7 @@ For a real site or app (your own palette, type, spacing and chrome), start from 
 4. Point your app at that entry point instead of `octet-scss`
 5. Brand it: copy `_theme-colors.scss` to `_brand.scss` and set your tokens
 
-Then delete the chrome you don't need (nav, footer, app shell). Keep `_theme-spacing.scss`: it's where your project's spacing lives (see [Layout spacing](#layout-spacing)).
+Then delete the chrome you don't need (nav, footer, the app shell rules). Keep `_theme-spacing.scss` and `_theme-layout.scss`: they're where your project's spacing and layout live (see [Layout spacing](#layout-spacing) and [Shared layout](#shared-layout)).
 
 ### Working with an AI coding assistant
 
@@ -235,6 +235,10 @@ Don't start a second spacing file or a separate layer of spacing mixins and vari
 And it's mostly `margin-bottom`. Every block pushes the next one down, so spacing flows in one direction — top to bottom, the way you read it. One direction means margins rarely fight or double up, and "how far apart are these two blocks?" has a single answer, on the block above.
 
 Spacing steps on the 8pt grid through `scaled-spacing()` across `$breakpoints`, so vertical rhythm stays on the baseline as the viewport grows. `starter-theme/_theme-spacing.scss` is the worked example.
+
+## Shared layout
+
+`_theme-layout.scss` works the same way for layout. The property decides which file a rule goes in: `margin`, `padding` and `gap` are spacing; `width`/`height`, `grid`/`flex`, alignment and position are layout. It holds the page layout (the app shell, columns, reflow points) and any sizing or alignment that like components have to share. Inputs, selects and buttons get one control height there, so a form row lines up instead of drifting a few pixels per control. Layout that belongs to one component alone stays with that component. As with spacing: one file, extended, never duplicated.
 
 ## Theming
 

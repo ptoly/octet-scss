@@ -6,6 +6,23 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). While
 the project is pre-1.0, a **minor** bump may carry breaking changes — pin to an
 exact version if that matters to you.
 
+## Unreleased
+
+### Docs
+
+- Documented what `_theme-layout.scss` is for. It was described only as the
+  app shell, but it's meant to be the one layout file: page layout plus the
+  sizing and alignment that like components share, such as one control
+  height for inputs, selects and buttons. The file's header comment, both
+  READMEs (a new "Shared layout" section) and `CONVENTIONS.md` (a new Layout
+  section and checklist item) now say so, and the setup steps say to keep
+  the file when trimming the starter theme. No change to emitted CSS.
+- Stated the rule for choosing between the two files: the property decides.
+  `margin`, `padding` and `gap` go in `_theme-spacing.scss`; `width` /
+  `height`, `grid` / `flex`, alignment and position go in
+  `_theme-layout.scss`. One component's styling can span both, on purpose.
+  Added to `CONVENTIONS.md` and the README. No change to emitted CSS.
+
 ## 0.4.1 — 2026-10-10
 
 ### Docs

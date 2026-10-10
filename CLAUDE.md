@@ -38,6 +38,9 @@ convention changes, update both, and keep CONVENTIONS.md literal and terse.
 - All block-level layout spacing lives in ONE file, on purpose (see
   `starter-theme/_theme-spacing.scss`), including gutters and insets shared
   across components. Mostly `margin-bottom`
+- Likewise, shared layout lives in ONE file (`starter-theme/_theme-layout.scss`):
+  page layout plus sizing and alignment like components must share (one
+  control height for inputs, selects, buttons)
 - Group code by unit of work, not by kind of code
 - One `$breakpoints` scale: 360, 540, 720, 900, 1280, 1366, 1441px. It drives
   vertical rhythm and is the list `from()` / `until()` pick from. Theme reflow

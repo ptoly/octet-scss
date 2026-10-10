@@ -56,7 +56,7 @@ Because your `brand` loads **after** the framework's `:root`, your values win.
 
 | File                          | Role                                                         |
 | ----------------------------- | ------------------------------------------------------------ |
-| `_theme-layout.scss`          | `.app-shell` — nav rail + scrolling main column              |
+| `_theme-layout.scss`          | The one layout file: page layout (`.app-shell`, a nav rail + scrolling main column) plus sizing and alignment shared by like components, such as one control height for inputs, selects and buttons. Keep it; extend it rather than adding another |
 | `_nav.scss` / `_footer.scss`  | Generic nav + footer                                         |
 | `_typography.scss`            | Body text + a decoupled heading level/size system            |
 | `_theme-spacing.scss`         | The one spacing file: rhythm between blocks, plus gutters and insets shared across components. Keep it; extend it rather than adding another |
