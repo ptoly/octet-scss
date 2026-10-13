@@ -37,7 +37,9 @@ convention changes, update both, and keep CONVENTIONS.md literal and terse.
   the 8pt baseline. Horizontal spacing is fluid (`fluid-gutter`)
 - All block-level layout spacing lives in ONE file, on purpose (see
   `starter-theme/_theme-spacing.scss`), including gutters and insets shared
-  across components. Mostly `margin-bottom`
+  across components. Stacked items use `margin-bottom`, never `gap`; `gap`
+  is only for side-by-side items (grid columns, inline groups). The
+  one-component exception covers a component's own padding only
 - Likewise, shared layout lives in ONE file (`starter-theme/_theme-layout.scss`):
   page layout plus sizing and alignment like components must share (one
   control height for inputs, selects, buttons)

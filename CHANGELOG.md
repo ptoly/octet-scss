@@ -6,6 +6,19 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). While
 the project is pre-1.0, a **minor** bump may carry breaking changes — pin to an
 exact version if that matters to you.
 
+## 0.4.3 — 2026-10-13
+
+### Docs
+
+- Tightened the spacing rules, after a downstream project spaced stacked
+  form fields with `gap` inside the component's own partial. `CONVENTIONS.md`,
+  the README, the spacing file's header and `CLAUDE.md` now say: stacked items
+  (sections, cards, form fields, list items) use `margin-bottom` in
+  `_theme-spacing.scss`, never `gap`; `gap` is only for side-by-side items
+  (grid columns, inline groups); and the one-component exception covers a
+  component's own padding only, not the spacing between its children. Added
+  a yes/no example and a checklist item. No change to emitted CSS.
+
 ## 0.4.2 — 2026-10-10
 
 ### Docs

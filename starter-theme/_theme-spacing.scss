@@ -13,7 +13,8 @@
 //     Don't add a second spacing file or a layer of spacing mixins; extend
 //     this one.
 //
-//  2. Mostly margin-bottom. Every block pushes the next one DOWN,
+//  2. margin-bottom for stacked items, never gap (gap is for side-by-side
+//     items: grid columns, inline groups). Every block pushes the next one DOWN,
 //     so spacing flows one direction — top to bottom, the way you read it.
 //     Margins never fight or double up, and the gap between two blocks always
 //     lives on the block above = much more consistency.

@@ -228,7 +228,9 @@ What goes in it:
 - **Block rhythm**: the spacing *between* blocks (sections, cards, lists)
 - **Shared insets**: any gutter or padding that several components must match, like a card header, a toolbar and table cells sharing one horizontal inset. Apply it here, by selector, so a change in one place moves them all
 
-What stays with its component: padding that belongs to that component alone (the inside of a button, say).
+What stays with its component: padding that belongs to that component alone (the inside of a button, say). Spacing between a component's children is rhythm, so it goes in the spacing file too.
+
+Stacked items are spaced with `margin-bottom`, never `gap`. `gap` is for items side by side: grid columns, a row of buttons.
 
 Don't start a second spacing file or a separate layer of spacing mixins and variables. Extend this one.
 

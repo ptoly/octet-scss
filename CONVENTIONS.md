@@ -51,10 +51,14 @@ Your entry file is a list of `@use` lines, in this order:
   - rhythm **between** blocks (sections, cards, list items)
   - gutters and insets **shared** by several components (for example, one
     horizontal inset for a card header, a toolbar and table cells)
-- Padding that belongs to **one** component alone stays in that component's
-  partial.
-- Space blocks with **`margin-bottom`**, mostly. Each block pushes the next
-  one down.
+- Vertical spacing between **stacked** items (sections, cards, form fields,
+  list items) is **`margin-bottom`**, set in `_theme-spacing.scss`. Each item
+  pushes the next one down. **Never `gap`** for vertical stacks.
+- `gap` is only for items arranged **side by side**: grid columns and inline
+  groups (a row of buttons, a field next to its button).
+- The one-component exception covers **padding only**: the inside of a
+  component's own box. Spacing **between** a component's children is rhythm,
+  and goes in `_theme-spacing.scss`.
 - Vertical values: `gridx($n)` or `scaled-spacing()` (stepped, stays on the
   8pt baseline). Horizontal values: `fluid-gutter()` (fluid).
 - **Don't** create a second spacing file, or a new layer of spacing mixins or
@@ -68,8 +72,16 @@ Your entry file is a list of `@use` lines, in this order:
   @include fluid-gutter(padding-inline, 16px, 24px);
 }
 
+// _theme-spacing.scss: yes (stacked form fields)
+.form__field:not(:last-child) {
+  @include scaled-spacing(margin-bottom, 3, 24px);
+}
+
 // _card.scss: no, this belongs in _theme-spacing.scss
 @mixin card-gutter { … }
+
+// _form.scss: no, a vertical stack never uses gap
+.form__fields { display: flex; flex-direction: column; gap: 24px; }
 ```
 
 ## 4. Layout
@@ -148,6 +160,7 @@ select,
 ## 11. Done checklist
 
 - [ ] No spacing outside `_theme-spacing.scss` except one-component padding
+- [ ] No `gap` on vertical stacks; stacked items use `margin-bottom`
 - [ ] Shared sizing and alignment in `_theme-layout.scss`; like controls share one height
 - [ ] No raw color values in components
 - [ ] Vertical sizes from `gridx()` / `scaled-spacing()`
