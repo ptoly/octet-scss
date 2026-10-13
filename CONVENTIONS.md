@@ -128,9 +128,14 @@ select,
 
 ## 8. Responsive and interaction
 
-- Media queries: `from($bp)` / `until($bp)` with the shared `$breakpoints`
-  scale (360, 540, 720, 900, 1280, 1366, 1441px). Don't invent breakpoints
-  in components.
+- Media queries: `from($bp)` / `until($bp)` with a value from the shared
+  `$breakpoints` scale (default 360, 540, 720, 900, 1280, 1366, 1441px).
+  Don't invent breakpoints or write raw `@media` width queries in
+  components.
+- Need a different scale? Configure it once, at import:
+  `@use "octet-scss/abstracts" with ($breakpoints: (…))`.
+- Responsive spacing: `scaled-spacing()`, never a hand-written media query
+  that changes a margin or padding.
 - Hover styles go inside `@include hover-only`. Never gate hover on a width
   breakpoint. Use `touch-only` for touch-specific styles.
 - Prefer `overflow: clip` to `overflow: hidden`.
@@ -165,5 +170,6 @@ select,
 - [ ] No raw color values in components
 - [ ] Vertical sizes from `gridx()` / `scaled-spacing()`
 - [ ] Hover inside `hover-only`
+- [ ] No raw `@media` width queries; `from()` / `until()` with `$breakpoints`
 - [ ] BEM names; state on attributes; no ID selectors
 - [ ] No new tokens, mixins, spacing or layout files without asking

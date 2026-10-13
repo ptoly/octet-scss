@@ -8,7 +8,23 @@ exact version if that matters to you.
 
 ## 0.4.3 — 2026-10-13
 
+### Fixed
+
+- `$breakpoints` couldn't be configured. It's now `!default`, so a project
+  can set its own scale with `@use "octet-scss/abstracts" with
+  ($breakpoints: (…))`, and `scaled-spacing()`, `fluid-font-size()` and
+  `from()` / `until()` all follow it. Without that, downstream code was
+  writing its own media queries. No change to emitted CSS at the default
+  scale.
+
 ### Docs
+
+- Documented the configurable variables (`$grid-base`, `$rem-base`,
+  `$breakpoints`, `$layout-max-width`) in the README's Theming section, and
+  removed two references to a `_config.scss` file that doesn't exist.
+  `CONVENTIONS.md` now says to configure the scale at import, to use
+  `scaled-spacing()` for responsive spacing, and never to write raw `@media`
+  width queries in components (plus a checklist item).
 
 - Tightened the spacing rules, after a downstream project spaced stacked
   form fields with `gap` inside the component's own partial. `CONVENTIONS.md`,

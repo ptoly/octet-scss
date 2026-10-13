@@ -3,7 +3,8 @@
 //  ---------------------------------------------------------------------------
 //  Compile-time framework constants — grid, type, radius, breakpoints, layout,
 //  motion. All SCSS: these feed media queries and Sass math, so they can't be
-//  runtime custom properties. Project-specific dimensions live in _config.scss.
+//  runtime custom properties. Values marked !default are configurable at
+//  import with @use "octet-scss/abstracts" with (…).
 // =============================================================================
 @use "sass:math";
 
@@ -47,8 +48,10 @@ $radius-xl: 16px;  // large surfaces (4x grid)
 //  Single source of truth: drives vertical rhythm (scaled-spacing,
 //  fluid-font-size) AND is the menu that from()/until() pick from, so
 //  structural reflows land on rhythm lines. SCSS — media queries can't read
-//  var(). Project reflow points live in _config.scss.
-$breakpoints: 360px, 540px, 720px, 900px, 1280px, 1366px, 1441px;
+//  var(). Configurable at import: @use "octet-scss/abstracts" with
+//  ($breakpoints: …). Keep it an ascending list of px values; every
+//  responsive mixin reads from it, so components never need their own.
+$breakpoints: 360px, 540px, 720px, 900px, 1280px, 1366px, 1441px !default;
 
 // ---- Layout ------------------------------------------------------------------
 $layout-max-width:      1640px !default; // overall content max width (overridable)

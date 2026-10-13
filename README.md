@@ -252,14 +252,18 @@ The override model is **CSS custom properties**. Import the framework, then set 
 :root { --brand: /* your brand */; --surface-page: /* your bg */; }
 ```
 
-Most SCSS tokens (`$breakpoints`, `$radius-*`, motion, z-index, layout dimensions) are **compile-time and fixed** — change them by editing your own theme copy. Two are `!default` and configurable at import, since projects routinely re-base them:
+Most SCSS tokens (`$radius-*`, motion, z-index) are **compile-time and fixed**. Four are `!default` and configurable at import, since projects routinely re-base them:
 
 ```scss
 @use "octet-scss/abstracts" as * with (
-  $grid-base: 4px,   // default 8px — the 8pt rhythm unit
-  $rem-base: 18px    // default 16px — the root size rem() divides by
+  $grid-base: 4px,          // default 8px — the 8pt rhythm unit
+  $rem-base: 18px,          // default 16px — the root size rem() divides by
+  $breakpoints: (400px, 800px, 1200px),  // ascending px list
+  $layout-max-width: 1440px // default 1640px
 );
 ```
+
+Set them **once**, in the file that first loads `abstracts` (your entry point). `scaled-spacing()`, `fluid-font-size()` and `from()` / `until()` all read the same `$breakpoints`, so a project changes its scale here rather than writing its own media queries.
 
 The color maps (`$primary`, `$secondary`, `$tertiary`, `$neutral`, `$semantic-colors`) are `!default` too, so you can also set the palette at compile time. Overriding the custom properties in `:root` is usually simpler.
 
