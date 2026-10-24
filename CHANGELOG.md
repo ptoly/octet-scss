@@ -6,6 +6,42 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). While
 the project is pre-1.0, a **minor** bump may carry breaking changes — pin to an
 exact version if that matters to you.
 
+## Unreleased
+
+### Added
+
+- `fluid-gutter-value()`, the `clamp()` behind `fluid-gutter()`, as a function.
+  Use it where the fluid length isn't a plain property, such as a grid track.
+  `fluid-gutter()` now calls it and emits the same CSS as before.
+- `.full-width`: a child of `.css-grid-layout` opts out of the main column to
+  full bleed, so any section can carry an edge-to-edge background. Before,
+  only `.hero` could.
+
+### Changed
+
+- `.css-grid-layout` side gutters are fluid, 16px to 48px, instead of a fixed
+  48px minimum. At a 360px phone the old minimum left a 264px column. The
+  emitted `grid-template-columns` changes; nothing else does.
+
+### Docs
+
+- `CONVENTIONS.md` §3 now says who owns padding. The container owns its inside
+  space on all four sides, responsively, and children don't carry padding to
+  make the container's insets. Tap-target padding is a separate, fixed thing.
+  The space after a container stays `margin-bottom`. The old text allowed
+  one-component padding but didn't say whether the container or its child
+  should hold it, so a child's `padding-block` looked legal. No change to
+  emitted CSS.
+- `CONVENTIONS.md` §4 now says a row containing an image or SVG is a flex row
+  with `align-items: center`, and the wrapper around the image is
+  `display: block`. An `inline-block` wrapper left a baseline gap under a
+  header logo, so symmetric padding looked uneven. No change to emitted CSS.
+- `CONVENTIONS.md` §3 now names the hero as the one exception to
+  `margin-bottom` for space between blocks: the hero takes `padding-top`, in
+  its own partial. It's the one place a site consistently needs top padding.
+  When a hero follows the header, the header drops its `margin-bottom` so the
+  gap below it has one owner. No change to emitted CSS.
+
 ## 0.4.3 — 2026-10-13
 
 ### Fixed

@@ -74,10 +74,19 @@ $_negative-invalid:
 //  term. Use where a smooth, unstepped gap reads better than the grid.
 // -----------------------------------------------------------------------------
 @mixin fluid-gutter($property, $min: 24px, $max: 80px, $min-bp: 360px, $max-bp: 1920px) {
+  #{$property}: fluid-gutter-value($min, $max, $min-bp, $max-bp);
+}
+
+// -----------------------------------------------------------------------------
+//  fluid-gutter-value — the clamp() behind fluid-gutter, as a value. Use it
+//  where the fluid length isn't a plain property, e.g. a grid track:
+//  grid-template-columns: minmax(fluid-gutter-value(16px, 48px), 1fr) …
+// -----------------------------------------------------------------------------
+@function fluid-gutter-value($min: 24px, $max: 80px, $min-bp: 360px, $max-bp: 1920px) {
   $slope: math.div($max - $min, $max-bp - $min-bp);
   $base: $max - ($slope * $max-bp);
 
-  #{$property}: clamp(
+  @return clamp(
           #{$min},
           #{$base} + #{$slope * 100}vw,
           #{$max}

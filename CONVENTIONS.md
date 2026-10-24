@@ -59,6 +59,26 @@ Your entry file is a list of `@use` lines, in this order:
 - The one-component exception covers **padding only**: the inside of a
   component's own box. Spacing **between** a component's children is rhythm,
   and goes in `_theme-spacing.scss`.
+- **The container owns its padding.** The inside space of a component (card,
+  header, toolbar, panel) is padding on its **root element**, on all four
+  sides, and it is responsive: `fluid-gutter()` for inline sides,
+  `scaled-spacing()` for block sides. Children don't carry padding to create
+  the container's insets. That way, adding a menu or an icon to a header later
+  changes nothing about its spacing. If the component already has a rule in
+  `_theme-spacing.scss` (a shared inline inset, say), put its block padding
+  in the same rule so all four sides read together.
+- **Tap targets are a separate job.** A link or control smaller than 44px
+  gets its own small, fixed padding to reach 44px, with the arithmetic in a
+  comment. That padding isn't whitespace and doesn't scale. The container's
+  responsive padding is whitespace and isn't clickable.
+- The space **after** a container is rhythm: `margin-bottom` on the container,
+  like any other stacked block. Never `padding-bottom` or a child's
+  `padding-block` to push the next block away.
+- **One exception: the hero.** The hero, the first block of a page, takes
+  `padding-top` with `scaled-spacing()`, in its own partial. It's the one
+  place a site consistently needs top padding. A header right above the hero
+  drops its `margin-bottom`, so the gap has one owner. Every other space
+  between blocks stays `margin-bottom` on the block above.
 - Vertical values: `gridx($n)` or `scaled-spacing()` (stepped, stays on the
   8pt baseline). Horizontal values: `fluid-gutter()` (fluid).
 - **Don't** create a second spacing file, or a new layer of spacing mixins or
@@ -77,6 +97,29 @@ Your entry file is a list of `@use` lines, in this order:
   @include scaled-spacing(margin-bottom, 3, 24px);
 }
 
+// _theme-spacing.scss: yes (the header owns all four sides; margin pushes
+// the next block down, unless a hero follows: the hero's padding-top owns
+// that space, so drop this margin-bottom)
+.site-header {
+  @include fluid-gutter(padding-inline, 16px, 48px);
+  @include scaled-spacing(padding-block, 2, 16px);
+  @include scaled-spacing(margin-bottom, 3, 32px);
+}
+
+// _site-header.scss: yes (a 39px logo link needs 5px more to reach 44px:
+// 3 + 39 + 3 = 45px)
+.site-header__brand {
+  padding-block: 3px;
+}
+
+// _site-header.scss: no, the child is making the container's inset
+.site-header__brand { padding-block: gridx(2); }
+
+// _hero.scss: yes (the hero exception: the one padding-top between blocks)
+.hero {
+  @include scaled-spacing(padding-top, 4, 64px);
+}
+
 // _card.scss: no, this belongs in _theme-spacing.scss
 @mixin card-gutter { … }
 
@@ -93,6 +136,12 @@ Your entry file is a list of `@use` lines, in this order:
   - sizing and alignment **shared** by like components (for example, one
     control height for inputs, selects and buttons)
 - Layout that belongs to **one** component alone stays in its partial.
+- **A row with an image or SVG in it** (a header with a logo, a media object)
+  is `display: flex; align-items: center`, set in `_theme-layout.scss`. Make
+  the link or wrapper around the image `display: block`. An `inline-block`
+  wrapper sits on the text baseline and leaves a descender-sized gap under the
+  image, so equal padding looks uneven (measured: 8px above the logo, 16.7px
+  below). Centering is alignment, not spacing; don't fix it with padding.
 - **Don't** create a second layout file. Extend `_theme-layout.scss`.
 
 ```scss
@@ -166,6 +215,8 @@ select,
 
 - [ ] No spacing outside `_theme-spacing.scss` except one-component padding
 - [ ] No `gap` on vertical stacks; stacked items use `margin-bottom`
+- [ ] No `padding-top` or `margin-top` for space between blocks, except the hero's `padding-top`
+- [ ] A container owns its padding on all four sides, responsively; children only add padding to reach a 44px target
 - [ ] Shared sizing and alignment in `_theme-layout.scss`; like controls share one height
 - [ ] No raw color values in components
 - [ ] Vertical sizes from `gridx()` / `scaled-spacing()`

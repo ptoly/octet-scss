@@ -53,17 +53,21 @@
   }
 }
 
+// Page grid. Children sit in a centered $layout-max-width column; `.full-width`
+// (or `.hero`) opts a child out to full bleed, so a section can carry an
+// edge-to-edge background. The side gutters are fluid, 16px to 48px.
 .css-grid-layout {
   display: grid;
   grid-template-columns:
-        [full-start] minmax(gridx(6), 1fr)
+        [full-start] minmax(fluid-gutter-value(16px, 48px), 1fr)
         [main-start] minmax(0, $layout-max-width)
-        [main-end] minmax(gridx(6), 1fr) [full-end];
+        [main-end] minmax(fluid-gutter-value(16px, 48px), 1fr) [full-end];
 
   > * {
     grid-column: main-start / main-end;
   }
 
+  > .full-width,
   .hero {
     grid-column: full-start / full-end;
   }

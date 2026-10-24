@@ -213,7 +213,7 @@ The values are Sass maps in abstracts (`$primary`, `$secondary`, `$tertiary`, `$
 | -------------------------------------------- | ------------------------------------------------------------ |
 | `.cols-2` … `.cols-12` / `.cg-cols-2` … `.cg-cols-12` | Grid with N equal columns from 540px up (one column below), scaled gap. A `.cg-cols-*` nested inside gets a tighter gap |
 | `.cols-auto-fit` / `.cg-cols-auto`           | Auto-fit grid: 196px minimum columns from 720px up (one column below) / 200px minimum columns at all widths |
-| `.css-grid-layout`                           | Page grid: children sit in a centered `$layout-max-width` column; a child `.hero` spans full bleed |
+| `.css-grid-layout`                           | Page grid: children sit in a centered `$layout-max-width` column with fluid 16–48px gutters; a child `.full-width` (or `.hero`) spans full bleed |
 | `.max-width` / `.readability-width`          | Cap at `$layout-max-width` / `$layout-readable-width` (720px) |
 | `.center` / `.no-wrap`                       | `text-align: center` / `white-space: nowrap`                 |
 | `.unstyled`                                  | Strip a `<button>` (or other control) to bare styles while keeping it focusable |
