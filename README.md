@@ -17,7 +17,7 @@ The grid is the other half. One 8px base (halved to 4px if you want finer refine
 ## Features
 
 - **8pt grid** — `$grid-base` (8px) and `gridx($n)` for on-grid vertical rhythm; spacing steps stay on the baseline
-- **Responsive, scalable type** — `fluid-font-size()`, a self-bounding `clamp()`, with optional grid-snapped line-height via CSS `round()`
+- **Responsive, scalable type** — `fluid-font-size()`, a self-bounding `clamp()`, with optional grid-snapped line-height via CSS `round()`. Fluid headings are on by default in `base`
 - **Reader-scalable body copy** — p, lists and captions use `rem()` (px-authored) so reading text honors the browser's font-size setting (WCAG 1.4.4)
 - **Responsive layout mixins** — `from()` / `until()`, `display-grid`, `max-width`, `scaled-spacing`
 - **Single-file spacing** — one breakpoint scale drives vertical rhythm, all in one place, for consistency (see more below)
@@ -97,11 +97,33 @@ The examples below use the load-path form; with the importer, prefix each path w
 | Path                        | What you get                                                          |
 | --------------------------- | --------------------------------------------------------------------- |
 | `octet-scss/abstracts`      | The core: tokens, mixins, functions, motion, layout. Outputs no CSS     |
-| `octet-scss/base`           | The CSS every page needs: reset, a11y defaults, `:root` color tokens, document defaults (page color, body font, link color) |
+| `octet-scss/base`           | The CSS every page needs: reset, a11y defaults, `:root` color tokens, document defaults (page color, body font, link color), fluid headings |
 | `octet-scss/utilities`      | Grid classes (`.cols-*`, `.cg-cols-*`, `.css-grid-layout`), helper classes, `html.is-locked` (optional) |
 | `octet-scss/components`     | Buttons and bullet lists (optional)                                    |
 | `octet-scss/starter-theme`  | The example theme as-is — better copied than imported (see below)      |
 | `octet-scss`                | Everything above plus the demo sections and pages — the full showcase |
+
+### Pick only what you need
+
+`base` is five partials, and each one is its own import. Load the whole layer, or only the parts you want:
+
+| Path | What you get |
+| --- | --- |
+| `octet-scss/base/reset` | The reset |
+| `octet-scss/base/a11y` | Focus ring, skip link, `.sr-only`, reduced-motion reset |
+| `octet-scss/base/colors` | The `:root` color tokens |
+| `octet-scss/base/document` | Page color, body font, link color |
+| `octet-scss/base/headings` | Fluid heading sizes, `h1`–`h6` and `.size-h1`–`.size-hero` |
+
+For example, `@use "octet-scss/base/reset"; @use "octet-scss/base/a11y";` gives you the reset and accessibility defaults with no heading styles.
+
+To change the heading sizes, set `$heading-scale` when you load `base`. List only the levels you change. Each entry is `(min-size, max-size, line-height-ratio)`:
+
+```scss
+@use "octet-scss/base" with (
+  $heading-scale: (h1: (32px, 56px, 1.1), hero: (40px, 72px, 1.1))
+);
+```
 
 ### Load order
 
@@ -157,6 +179,13 @@ Then delete the chrome you don't need (nav, footer, the app shell rules). Keep `
 ```
 Follow node_modules/octet-scss/CONVENTIONS.md for all styles.
 ```
+
+### Using Octet with other tools
+
+Step-by-step recipes live in [`docs/recipes/`](docs/recipes/):
+
+- [Radix Primitives](docs/recipes/radix.md): Radix handles keyboard and focus behavior, and Octet does all the styling.
+- [Tailwind v4](docs/recipes/tailwind.md): Octet owns the page, Tailwind styles the inside of components, and both read the same tokens.
 
 ## Token & mixin reference
 

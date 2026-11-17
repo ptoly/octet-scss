@@ -10,6 +10,11 @@ exact version if that matters to you.
 
 ### Added
 
+- `base/headings`: fluid heading sizes for `h1`–`h6`, `.size-h1`–`.size-h6`,
+  `.size-hero` and `.smallest-heading`, driven by a `$heading-scale` map you
+  can override with `@use "octet-scss/base" with (...)`. List only the levels
+  you change. Each `base` partial can also be imported on its own, such as
+  `octet-scss/base/reset`.
 - `fluid-gutter-value()`, the `clamp()` behind `fluid-gutter()`, as a function.
   Use it where the fluid length isn't a plain property, such as a grid track.
   `fluid-gutter()` now calls it and emits the same CSS as before.
@@ -18,6 +23,13 @@ exact version if that matters to you.
   only `.hero` could.
 
 ### Changed
+
+- Fluid heading sizes moved from `starter-theme/_typography.scss` into `base`,
+  so loading `base` alone now sizes headings. The default values are the same
+  as before, and the full build's CSS is unchanged. If you load `base` without
+  the starter theme, your headings change from browser-default sizes to the
+  fluid scale. To keep the old look, import the `base` partials one by one and
+  leave out `base/headings`. Weights and margins stay in the starter theme.
 
 - `.css-grid-layout` side gutters are fluid, 16px to 48px, instead of a fixed
   48px minimum. At a 360px phone the old minimum left a 264px column. The
