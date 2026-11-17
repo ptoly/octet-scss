@@ -1,0 +1,55 @@
+@use "sass:list";
+@use "sass:map";
+@use "../abstracts" as *;
+
+// =============================================================================
+//  Headings — fluid heading sizes, on by default.
+//  Level (h1–h6) is document structure; .size-hN is visual size, independent of
+//  level. Each size is a self-bounding clamp() from min at $heading-min-viewport
+//  to max at $heading-max-viewport, with line-height rounded up to $grid-base.
+//
+//  Override the whole scale (or just the viewport range) when you load Octet:
+//
+//    @use "octet-scss/base" with (
+//      $heading-scale: (h1: (32px, 56px, 1.1), ...)
+//    );
+//
+//  Each entry is (min-size, max-size, line-height-ratio). A partial map is
+//  merged over the defaults, so list only the levels you change. Weights and margins stay with the theme.
+//  Skip fluid headings entirely by importing the other base partials one by one.
+// =============================================================================
+$heading-min-viewport: 360px !default;
+$heading-max-viewport: 1920px !default;
+$_heading-defaults: (
+  h1:   (28px, 44px, 1.1),
+  h2:   (24px, 32px, 1.1),
+  h3:   (20px, 24px, 1.1),
+  h4:   (18px, 22px, 1.1),
+  h5:   (16px, 20px, 1.5),   // body-like leading, for readability
+  h6:   (14px, 18px, 1.5),
+  hero: (36px, 64px, 1.1),
+);
+$heading-scale: () !default;
+$_scale: map.merge($_heading-defaults, $heading-scale);
+
+$_heading-selectors: (
+  h1:   "h1, .size-h1",
+  h2:   "h2, .size-h2",
+  h3:   "h3, .size-h3",
+  h4:   "h4, .size-h4",
+  h5:   "h5, .size-h5",
+  h6:   "h6, .size-h6, .smallest-heading",
+  hero: ".size-hero",
+);
+
+@each $level, $selector in $_heading-selectors {
+  $size: map.get($_scale, $level);
+  @if $size {
+    #{$selector} {
+      @include fluid-font-size(
+        list.nth($size, 1), list.nth($size, 2),
+        $heading-min-viewport, $heading-max-viewport, list.nth($size, 3)
+      );
+    }
+  }
+}
