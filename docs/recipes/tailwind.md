@@ -2,7 +2,7 @@
 
 Octet owns the page: the reset, type, spacing between blocks, and colors. Tailwind handles the inside of components. Both read the same tokens, so neither can drift from the other.
 
-This recipe was built and tested with octet-scss 0.4.3 and Tailwind 4.3.
+This recipe was built and tested with octet-scss 0.5.0 and Tailwind 4.3.
 
 ![Two cards styled with Tailwind utilities on Octet's tokens](images/tailwind-desktop.png)
 
@@ -64,7 +64,7 @@ What combining does reduce is drift. Plain Tailwind lets a team scatter dozens o
 
 It's a guardrail, not a lock. Tailwind's arbitrary values, like `mt-[13px]`, still work. This recipe's own test page uses `max-w-[1100px]`. A team that wants strict consistency should add a lint rule against them.
 
-The test page is tiny. Real sites grow with every class they use, so treat these numbers as a floor. Measured with Octet 0.4.3 and Tailwind 4.3.
+The test page is tiny. Real sites grow with every class they use, so treat these numbers as a floor. Measured with Octet 0.5.0 and Tailwind 4.3.
 
 ## What you end up with
 
@@ -517,4 +517,4 @@ Same page at 390px wide. The cards stack to one column at Octet's 720px breakpoi
 
 ## Status
 
-Tested with Octet 0.4.3 and Tailwind 4.3, in a standalone page and in a Vite 8 project (React and TypeScript, dev server and production build). Next.js hasn't been tried. A generated `octet-tailwind.css` may ship with Octet in a later release, so you won't have to write the theme file yourself.
+Tested with Octet 0.5.0 and Tailwind 4.3, in a standalone page and in a Vite 8 project (React and TypeScript, dev server and production build). Next.js hasn't been tried. A generated `octet-tailwind.css` may ship with Octet in a later release, so you won't have to write the theme file yourself.

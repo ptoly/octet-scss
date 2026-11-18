@@ -6,7 +6,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). While
 the project is pre-1.0, a **minor** bump may carry breaking changes — pin to an
 exact version if that matters to you.
 
-## Unreleased
+## 0.5.0 — 2026-11-18
 
 ### Added
 
@@ -37,6 +37,9 @@ exact version if that matters to you.
 
 ### Docs
 
+- New recipes in `docs/recipes/`: Tailwind v4 with Octet, and Radix Primitives
+  with Octet. Each has a "should you use it" section, tested setup steps for
+  Vite, and screenshots. Neither changes emitted CSS.
 - `CONVENTIONS.md` §3 now says who owns padding. The container owns its inside
   space on all four sides, responsively, and children don't carry padding to
   make the container's insets. Tap-target padding is a separate, fixed thing.

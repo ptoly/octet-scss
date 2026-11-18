@@ -2,7 +2,7 @@
 
 Radix Primitives supply behavior: keyboard handling, focus management, ARIA. Octet supplies every style. *Don't use Radix Themes or any Radix CSS.*
 
-This recipe was built and tested with Octet 0.4.3 plus the fluid headings added to `base` after it, Radix Accordion and Dialog 1.3.1, React 19, and Vite 8.
+This recipe was built and tested with Octet 0.5.0, Radix Accordion and Dialog 1.3.1, React 19, and Vite 8.
 
 ![An open accordion on Octet's dark surfaces](images/radix-desktop.png)
 
@@ -506,4 +506,4 @@ Same page at 390px wide, with the dialog open. The dialog is `min(100vw − 32px
 
 ## Status
 
-Tested with Octet 0.4.3 plus the fluid headings in `base`, and Radix Accordion and Dialog 1.3.1, in a Vite 8 project (React and TypeScript, dev server, production build and a headless browser check on desktop and phone widths). Other primitives (Select, Popover, Tabs) follow the same rules but haven't been tried. Next.js hasn't been tried.
+Tested with Octet 0.5.0 and Radix Accordion and Dialog 1.3.1, in a Vite 8 project (React and TypeScript, dev server, production build and a headless browser check on desktop and phone widths). Other primitives (Select, Popover, Tabs) follow the same rules but haven't been tried. Next.js hasn't been tried.
