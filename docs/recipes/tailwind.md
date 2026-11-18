@@ -6,14 +6,6 @@ This recipe was built and tested with octet-scss 0.4.3 and Tailwind 4.3.
 
 ![Two cards styled with Tailwind utilities on Octet's tokens](images/tailwind-desktop.png)
 
-## What you end up with
-
-- Tailwind color classes (`bg-brand`, `text-text-secondary`) point at Octet's custom properties. Change a color in your theme and both systems follow.
-- Tailwind's default palette is gone. Only Octet's colors exist.
-- `p-6` is 24px and `gap-4` is 16px. Every step lands on the 8px grid.
-- `md` and `lg` match Octet's 720px and 900px breakpoints, so both systems reflow at the same width.
-- Octet's reset replaces Tailwind's Preflight. Octet sits in a lower cascade layer, so a utility can override Octet, never the reverse.
-
 ## Should you use both?
 
 Octet works well by itself. Add Tailwind only if the trade-offs below suit your team.
@@ -73,6 +65,14 @@ What combining does reduce is drift. Plain Tailwind lets a team scatter dozens o
 It's a guardrail, not a lock. Tailwind's arbitrary values, like `mt-[13px]`, still work. This recipe's own test page uses `max-w-[1100px]`. A team that wants strict consistency should add a lint rule against them.
 
 The test page is tiny. Real sites grow with every class they use, so treat these numbers as a floor. Measured with Octet 0.4.3 and Tailwind 4.3.
+
+## What you end up with
+
+- Tailwind color classes (`bg-brand`, `text-text-secondary`) point at Octet's custom properties. Change a color in your theme and both systems follow.
+- Tailwind's default palette is gone. Only Octet's colors exist.
+- `p-6` is 24px and `gap-4` is 16px. Every step lands on the 8px grid.
+- `md` and `lg` match Octet's 720px and 900px breakpoints, so both systems reflow at the same width.
+- Octet's reset replaces Tailwind's Preflight. Octet sits in a lower cascade layer, so a utility can override Octet, never the reverse.
 
 ## Setup
 
